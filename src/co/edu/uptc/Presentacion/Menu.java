@@ -9,6 +9,7 @@ public class Menu {
 	
 	public void menuBloc() {
 		
+		System.out.println("Menu");
 	}
 
 }
