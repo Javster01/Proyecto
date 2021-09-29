@@ -2,13 +2,22 @@ package co.edu.uptc.Modelo;
 
 public class Nota {
 
-	private String titulo, contenido, fecha, id, ruta;
+	private String titulo, contenido, fecha, ruta;
+	private int id, urgencia;
 
-	public String getId() {
+	public int getUrgencia() {
+		return urgencia;
+	}
+
+	public void setUrgencia(int urgencia) {
+		this.urgencia = urgencia;
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
