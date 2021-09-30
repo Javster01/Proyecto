@@ -103,6 +103,9 @@ public class GUIMostrarNota extends JFrame {
 		contenido.setLineWrap(true);
 		contenido.setWrapStyleWord(true);
 		contenido.setText(c.buscarNota(nombreNota).getContenido());
+
+		String con = contenido.getText();
+
 		contenido.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
 
 		notasPanel.add(contenido);
@@ -127,19 +130,19 @@ public class GUIMostrarNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (!contenido.getText().equals(c.buscarNota(nombreNota))) {
-					
-					c.buscarNota(nombreNota).setContenido(nombreNota);
+				if (!contenido.getText().equals(c.buscarNota(nombreNota).getContenido())) {
+
+					c.buscarNota(nombreNota).setContenido(contenido.getText());
 					c.eliminarNota(c.buscarNota(nombreNota));
-					
+
 					GUIListadoNotas notas = new GUIListadoNotas();
 					notas.setVisible(true);
-					notas.setResizable(true);
+					notas.setResizable(false);
 					notas.setLocationRelativeTo(null);
 					setVisible(false);
-					
-				} else if (contenido.getText().equals(c.buscarNota(nombreNota))) {
-					
+
+				} else if (contenido.getText().equals(c.buscarNota(nombreNota).getContenido())) {
+
 					JOptionPane.showMessageDialog(null, "No se han hecho cambios en al nota");
 				}
 			}
