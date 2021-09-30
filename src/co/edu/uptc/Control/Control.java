@@ -2,8 +2,6 @@ package co.edu.uptc.Control;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
-
 import co.edu.uptc.Modelo.*;
 import co.edu.uptc.Persistencia.*;
 
@@ -38,7 +36,7 @@ public class Control {
 		this.listadoNotas = listadoNotas;
 	}
 
-	public void agregarNota(String titulo, String contenido) {
+	public void agregarNota(String titulo, String contenido, String ruta, int urgencia) {
 
 		Nota n = new Nota();
 
@@ -55,11 +53,13 @@ public class Control {
 		n.setTitulo(titulo);
 		n.setContenido(contenido);
 		n.setId(listadoNotas.size() + 1);
+		n.setUrgencia(urgencia);
+		n.setRuta(ruta + "/" + n.getTitulo() + ".txt");
 		n.setFecha(fecha);
 
 		DAONotas notas = new DAONotas();
 
-//		notas.guardarNota(n);
+		notas.guardarNota(n, n.getRuta());
 
 		listadoNotas = notas.getNotas("Notas");
 
@@ -94,17 +94,18 @@ public class Control {
 			}
 		}
 
-		sobreEscribirNotas(lista, n);
+		sobreEscribirArchivo(lista, n);
 
 	}
 
-	private void sobreEscribirNotas(ArrayList<Nota> lista, Nota n) {
+	private void sobreEscribirArchivo(ArrayList<Nota> lista, Nota n) {
 
 		new DAONotas().resetArchivo(n);
 
 		for (int i = 0; i < lista.size(); i++) {
 
-			agregarNota(lista.get(i).getTitulo(), lista.get(i).getContenido());
+			agregarNota(lista.get(i).getTitulo(), lista.get(i).getContenido(), lista.get(i).getRuta(),
+					lista.get(i).getUrgencia());
 
 		}
 
