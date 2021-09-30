@@ -7,31 +7,31 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import co.edu.uptc.Control.Control;
-
 import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class GUIListadoNotas extends JFrame {
 
-	private JPanel panelEncabezado, panelAbajo, panelCentro;
+	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro;
 	private JLabel labelTituloEncabezado;
 	private JList<String> listaNotas;
-	private JButton crearNuevaNota, editarNota, borrarNota, verNota;
+	private JButton crearNuevaNota, editarNota, borrarNota; 
+//	private JButton verNota;
 
 	public GUIListadoNotas() {
 
 		// inicializar componentes
 
+		panelFondo = new JPanel();
 		labelTituloEncabezado = new JLabel();
 		listaNotas = new JList<String>();
+		editarNota = new JButton(); 
 		crearNuevaNota = new JButton();
-		editarNota = new JButton();
 		borrarNota = new JButton();
-		verNota = new JButton();
 
 		// Configuracion del Frame
 
-		ImageIcon im = new ImageIcon("RecursosGUI/icono1.png");
+		ImageIcon im = new ImageIcon("RecursosGUI/notas1.png");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(im.getImage());
 		setSize(360, 630);
@@ -47,7 +47,6 @@ public class GUIListadoNotas extends JFrame {
 
 	private JPanel AreaTrabajo() {
 
-		JPanel panelFondo = new JPanel();
 		panelFondo.setBackground(getForeground());
 
 		// panel del ecabezado
@@ -63,7 +62,7 @@ public class GUIListadoNotas extends JFrame {
 
 		panelCentro = new JPanel();
 		panelCentro.setBackground(getForeground());
-		panelCentro.setBorder(new LineBorder(new Color(0, 0, 0, 0), 40));
+		panelCentro.setBorder(new LineBorder(new Color(0, 0, 0, 0), 20));
 
 		JPanel notasPanel = new JPanel();
 		notasPanel.setPreferredSize(new DimensionUIResource(300, 320));
@@ -107,19 +106,60 @@ public class GUIListadoNotas extends JFrame {
 		iconos.setBackground(getForeground());
 		iconos.setLayout(new GridLayout(1, 3, 10, 10));
 
-		verNota.setIcon(new ImageIcon("RecursosGUI/ver.png"));
-		verNota.setBackground(getForeground());
-		verNota.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+//		verNota.setIcon(new ImageIcon("RecursosGUI/ver.png"));
+//		verNota.setBackground(getForeground());
+//		verNota.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+//		verNota.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//
+//				if (listaNotas.getSelectedValue() != null) {
+//
+//					GUIMostrarNota frame = new GUIMostrarNota(listaNotas.getSelectedValue());
+//					frame.setVisible(true);
+//					frame.setResizable(true);
+//					frame.setLocationRelativeTo(null);
+//
+//					setVisible(false);
+//
+//				} else if (listaNotas.getSelectedValue() == null) {
+//
+//					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para ver");
+//				}
+//
+//			}
+//		});
 
 		editarNota.setIcon(new ImageIcon("RecursosGUI/editar.png"));
 		editarNota.setBackground(Color.WHITE);
 		editarNota.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		editarNota.addActionListener(new ActionListener() {
 
-		borrarNota.setIcon(new ImageIcon("RecursosGUI/delete.png"));
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (listaNotas.getSelectedValue() != null) {
+
+					GUIMostrarNota frame = new GUIMostrarNota(listaNotas.getSelectedValue());
+					frame.setVisible(true);
+					frame.setResizable(true);
+					frame.setLocationRelativeTo(null);
+
+					setVisible(false);
+
+				} else if (listaNotas.getSelectedValue() == null) {
+
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para ver");
+				}
+
+			}
+		});
+
+		borrarNota.setIcon(new ImageIcon("RecursosGUI/eliminar.png"));
 		borrarNota.setBackground(Color.WHITE);
 		borrarNota.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
 
-		iconos.add(verNota);
 		iconos.add(editarNota);
 		iconos.add(borrarNota);
 
@@ -131,20 +171,6 @@ public class GUIListadoNotas extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				try {
-
-					GUINota frame = new GUINota(listaNotas.getSelectedValue());
-					frame.setVisible(true);
-					frame.setResizable(true);
-					frame.setLocationRelativeTo(null);
-
-					setVisible(false);
-
-				} catch (NullPointerException b) {
-
-					JOptionPane.showMessageDialog(null, "error");
-				}
 
 			}
 		});

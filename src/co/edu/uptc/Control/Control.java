@@ -18,26 +18,17 @@ public class Control {
 
 		nombresArchivos = d.getNombresArchivos();
 
-	
-
-//		listadoNotas = new DAONotas().getNotas();
-//		System.out.println(listadoNotas.size());
+		listadoNotas = new DAONotas().getNotas("Notas/");
 
 	}
-
-	
 
 	public String[] getNombresArchivos() {
 		return nombresArchivos;
 	}
 
-
-
 	public void setNombresArchivos(String[] nombresArchivos) {
 		this.nombresArchivos = nombresArchivos;
 	}
-
-
 
 	public ArrayList<Nota> getListadoNotas() {
 		return listadoNotas;
@@ -67,18 +58,18 @@ public class Control {
 		n.setFecha(fecha);
 
 		DAONotas notas = new DAONotas();
-//
+
 //		notas.guardarNota(n);
-//
-//		listadoNotas = notas.getNotas();
+
+		listadoNotas = notas.getNotas("Notas");
 
 	}
 
-	public Nota buscarNota(int id) {
+	public Nota buscarNota(String nombre) {
 
 		for (Nota nota : listadoNotas) {
 
-			if (id == nota.getId()) {
+			if (nombre.equalsIgnoreCase(nota.getTitulo())) {
 
 				return nota;
 
@@ -103,13 +94,13 @@ public class Control {
 			}
 		}
 
-		sobreEscribirNotas(lista);
+		sobreEscribirNotas(lista, n);
 
 	}
 
-	private void sobreEscribirNotas(ArrayList<Nota> lista) {
+	private void sobreEscribirNotas(ArrayList<Nota> lista, Nota n) {
 
-		new DAONotas().resetArchivo();
+		new DAONotas().resetArchivo(n);
 
 		for (int i = 0; i < lista.size(); i++) {
 

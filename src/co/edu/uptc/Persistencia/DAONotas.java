@@ -14,29 +14,30 @@ public class DAONotas {
 	// nombre, id, fecha, ruta, urgencia, contenido
 
 	private String ruta;
-//
-//	private String crearRuta() {
-//
-//		ruta = nomCarpeta + "/" + n.getTitulo() + "_" + n.getId() + ".txt";
-//
-//		return ruta;
-//	}
+
+	private String crearRuta(String nomCarpeta, Nota n) {
+
+		ruta = nomCarpeta + "/" + n.getTitulo() + ".txt";
+
+		return ruta;
+	}
 
 	// Metodo para agregar notas
+
 //	public void guardarNota(Nota n) {
 //
-//		new Archivo().AgregarContenido(crearRuta(n, n.getRuta()), n.getTitulo() + "," + n.getId() + "," + n.getFecha()
-//				+ "," + crearRuta(n, n.getRuta()) + "," + n.getUrgencia() + "," + n.getContenido());
+//		new Archivo().AgregarContenido("Notas", n.getTitulo() + "," + n.getId() + "," + n.getFecha() + ","
+//				+ crearRuta(n, n.getRuta()) + "," + n.getUrgencia() + "," + n.getContenido());
 //
 //		new DAORegistroNotas().guardarRegistro(n.getRuta());
 //
 //	}
 
-	// Metodo para extraer el contendio del txt
+	// Metodo para extraer los nombres de las notas del txt
+
 	public String[] getNombresArchivos() {
-		
+
 		ArrayList<String> nombresArchivos = new ArrayList<>();
-		
 
 		File dir = new File("Notas");
 
@@ -47,46 +48,69 @@ public class DAONotas {
 		});
 
 		for (int i = 0; i < files.length; i++) {
-			
-			nombresArchivos.add(files[i].getName().replace(".txt",""));
+
+			nombresArchivos.add(files[i].getName().replace(".txt", ""));
 		}
-		
+
 		if (files.length == 0) {
 			System.out.println("El directorio no contiene extensiones de tipo '.txt'");
 
-//			ArrayList<String> datos = new Archivo().ContenidoArchivo(new DAORegistroNotas().notasRegistradas());
-//		ArrayList<Nota> notas = new ArrayList<Nota>();
-//
-//		for (int i = 0; i < datos.size(); i++) {
-//
-//			Nota n = new Nota();
-//
-//			String linea[] = datos.get(i).split("_");
-//
-//			n.setTitulo(linea[0]);
-//			n.setId(Integer.parseInt(linea[1]));
-//			n.setFecha(linea[2]);
-//			n.setRuta(linea[3]);
-//			n.setUrgencia(Integer.parseInt(linea[4]));
-//			n.setContenido(linea[5].replace(";", ""));
-//
-//			notas.add(n);
-
 		}
-		String[] nombres = new String [nombresArchivos.size()] ;
-		
+		String[] nombres = new String[nombresArchivos.size()];
+
 		for (int i = 0; i < nombres.length; i++) {
-			nombres [i] = nombresArchivos.get(i);
-//			System.out.println(nombres [i]);
+			nombres[i] = nombresArchivos.get(i);
 		}
 
 		return nombres;
 	}
 
-	// Metodo para resetear el archivo para modifcar algo en la nota
-	public void resetArchivo() {
+	// Metodo para extraer las notas del txt
 
-		File a = new File(ruta);
+	public ArrayList<Nota> getNotas(String ruta) {
+
+		ArrayList<String> datos = new ArrayList<>();
+		ArrayList<Nota> notas = new ArrayList<Nota>();
+
+		File dir = new File(ruta);
+
+		File[] files = dir.listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().endsWith(".txt");
+			}
+		});
+
+		for (int i = 0; i < files.length; i++) {
+
+			datos = new Archivo().ContenidoArchivo((files[i].getPath()));
+
+			for (int j = 0; j < datos.size(); j++) {
+
+				Nota n = new Nota();
+
+				String linea[] = datos.get(j).split(",");
+
+				n.setTitulo(linea[0]);
+				n.setId(Integer.parseInt(linea[1]));
+				n.setFecha(linea[2]);
+				n.setRuta(linea[3]);
+				n.setUrgencia(Integer.parseInt(linea[4]));
+				n.setContenido(linea[5].replace(";", ""));
+
+				notas.add(n);
+
+			}
+
+		}
+
+		return notas;
+	}
+
+	// Metodo para resetear el archivo para modifcar algo en la nota
+
+	public void resetArchivo(Nota n) {
+
+		File a = new File(n.getRuta());
 		BufferedWriter bw;
 
 		if (a.exists()) {
