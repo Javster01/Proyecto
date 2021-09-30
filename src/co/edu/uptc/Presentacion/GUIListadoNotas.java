@@ -106,31 +106,6 @@ public class GUIListadoNotas extends JFrame {
 		iconos.setBackground(getForeground());
 		iconos.setLayout(new GridLayout(1, 3, 10, 10));
 
-//		verNota.setIcon(new ImageIcon("RecursosGUI/ver.png"));
-//		verNota.setBackground(getForeground());
-//		verNota.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
-//		verNota.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//
-//				if (listaNotas.getSelectedValue() != null) {
-//
-//					GUIMostrarNota frame = new GUIMostrarNota(listaNotas.getSelectedValue());
-//					frame.setVisible(true);
-//					frame.setResizable(true);
-//					frame.setLocationRelativeTo(null);
-//
-//					setVisible(false);
-//
-//				} else if (listaNotas.getSelectedValue() == null) {
-//
-//					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para ver");
-//				}
-//
-//			}
-//		});
-
 		editarNota.setIcon(new ImageIcon("RecursosGUI/editar.png"));
 		editarNota.setBackground(Color.WHITE);
 		editarNota.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
@@ -171,6 +146,13 @@ public class GUIListadoNotas extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				GUICrearNota frame = new GUICrearNota();
+				frame.setVisible(true);
+				frame.setResizable(true);
+				frame.setLocationRelativeTo(null);
+
+				setVisible(false);
 
 			}
 		});
