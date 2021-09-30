@@ -9,14 +9,14 @@ import co.edu.uptc.Control.Control;
 import java.awt.event.*;
 
 @SuppressWarnings("serial")
-public class GUIMostrarNota extends JFrame {
+public class GUICrearNota extends JFrame {
 
 	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro;
 	private JTextField titulo;
 	private JTextArea contenido;
-	private JButton volver, guardarCambios, agregarContraseña;
+	private JButton volver, guardar;
 
-	public GUIMostrarNota(String nombreNota) {
+	public GUICrearNota() {
 
 		// inicializar componentes
 
@@ -27,26 +27,24 @@ public class GUIMostrarNota extends JFrame {
 		titulo = new JTextField();
 		contenido = new JTextArea();
 		volver = new JButton();
-		guardarCambios = new JButton();
-		agregarContraseña = new JButton();
-
+		guardar = new JButton();
 		// Configuracion del Frame
 
 		ImageIcon im = new ImageIcon("RecursosGUI/notas1.png");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(im.getImage());
 		setSize(360, 630);
-		setTitle(nombreNota);
+		setTitle("Crear nota");
 		getContentPane().setBackground(Color.WHITE);
 
 		// Adicionando componentes
 
-		add(AreaTrabajo(nombreNota));
+		add(AreaTrabajo());
 
 		setVisible(true);
 	}
 
-	private JPanel AreaTrabajo(String nombreNota) {
+	private JPanel AreaTrabajo() {
 
 		panelFondo.setBackground(getForeground());
 
@@ -54,14 +52,10 @@ public class GUIMostrarNota extends JFrame {
 
 		panelEncabezado.setBackground(getForeground());
 		panelEncabezado.setLayout(new BorderLayout());
-
-		titulo.setText(nombreNota);
-		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
-		titulo.setBorder(new LineBorder(new Color(0, 0, 0, 0), 0));
 		
-		agregarContraseña.setIcon(new ImageIcon("RecursosGUI/contrasena.png"));
-		agregarContraseña.setBackground(Color.WHITE);
-		agregarContraseña.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
+		titulo.setBorder(new LineBorder(Color.BLACK));
+		titulo.setPreferredSize(new DimensionUIResource(300, 30));
 
 		volver.setIcon(new ImageIcon("RecursosGUI/flecha.png"));
 		volver.setBackground(Color.WHITE);
@@ -89,11 +83,6 @@ public class GUIMostrarNota extends JFrame {
 		pVolver.setBackground(getForeground());
 		pVolver.setLayout(new FlowLayout(FlowLayout.LEFT));
 		pVolver.add(volver);
-		
-		JPanel pContraseña = new JPanel();
-		pContraseña.setBackground(getForeground());
-		pContraseña.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		pContraseña.add(agregarContraseña);
 
 		JPanel pTituto = new JPanel();
 		pTituto.setBackground(getForeground());
@@ -101,7 +90,6 @@ public class GUIMostrarNota extends JFrame {
 		pTituto.add(titulo);
 
 		pVT.add(pVolver, BorderLayout.WEST);
-		pVT.add(pContraseña, BorderLayout.EAST);
 		pVT.add(pTituto, BorderLayout.SOUTH);
 
 		panelEncabezado.add(pVT, BorderLayout.CENTER);
@@ -116,12 +104,9 @@ public class GUIMostrarNota extends JFrame {
 		notasPanel.setBackground(getForeground());
 		notasPanel.setBorder(new LineBorder(Color.BLACK));
 
-		Control c = new Control();
-
 		contenido.setPreferredSize(new DimensionUIResource(285, 305));
 		contenido.setLineWrap(true);
 		contenido.setWrapStyleWord(true);
-		contenido.setText(c.buscarNota(nombreNota).getContenido());
 
 		contenido.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
 
@@ -138,19 +123,16 @@ public class GUIMostrarNota extends JFrame {
 		iconos.setBackground(getForeground());
 		iconos.setLayout(new GridLayout(1, 3, 10, 10));
 
-		guardarCambios.setText("Guardar cambios");
-		guardarCambios.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
-		guardarCambios.setForeground(Color.WHITE);
-		guardarCambios.setBackground(Color.BLACK);
-		guardarCambios.addActionListener(new ActionListener() {
+		guardar.setText("Guardar cambios");
+		guardar.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
+		guardar.setForeground(Color.WHITE);
+		guardar.setBackground(Color.BLACK);
+		guardar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (!contenido.getText().equals(c.buscarNota(nombreNota).getContenido()) || !titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
-
-					c.buscarNota(nombreNota).setContenido(contenido.getText());
-					c.eliminarNota(c.buscarNota(nombreNota));
+				if (!contenido.getText().isEmpty() && !titulo.getText().isEmpty()) {
 
 					GUIListadoNotas notas = new GUIListadoNotas();
 					notas.setVisible(true);
@@ -158,14 +140,14 @@ public class GUIMostrarNota extends JFrame {
 					notas.setLocationRelativeTo(null);
 					setVisible(false);
 
-				} else if (contenido.getText().equals(c.buscarNota(nombreNota).getContenido()) && titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
+				} else if (contenido.getText().isEmpty() || titulo.getText().isEmpty()) {
 
-					JOptionPane.showMessageDialog(null, "No se han hecho cambios en al nota");
+					JOptionPane.showMessageDialog(null, "No se han hecho los cambios necesarios en al nota");
 				}
 			}
 		});
 
-		panelAbajo.add(guardarCambios);
+		panelAbajo.add(guardar);
 
 		// agrega todos los paneles al del fondo
 
