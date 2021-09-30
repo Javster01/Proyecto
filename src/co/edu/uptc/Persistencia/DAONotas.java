@@ -11,27 +11,25 @@ import co.edu.uptc.Utilidades.Archivo;
 
 public class DAONotas {
 
-	// nombre, id, fecha, ruta, urgencia, contenido
+	// titulo, id, fecha, ruta, urgencia, contenido
 
 	private String ruta;
 
-	private String crearRuta(String nomCarpeta, Nota n) {
-
-		ruta = nomCarpeta + "/" + n.getTitulo() + ".txt";
-
-		return ruta;
-	}
+//	private String crearRuta(String nomCarpeta, Nota n) {
+//
+//		ruta = nomCarpeta + "/" + n.getTitulo() + ".txt";
+//
+//		return ruta;
+//	}
 
 	// Metodo para agregar notas
 
-//	public void guardarNota(Nota n) {
-//
-//		new Archivo().AgregarContenido("Notas", n.getTitulo() + "," + n.getId() + "," + n.getFecha() + ","
-//				+ crearRuta(n, n.getRuta()) + "," + n.getUrgencia() + "," + n.getContenido());
-//
-//		new DAORegistroNotas().guardarRegistro(n.getRuta());
-//
-//	}
+	public void guardarNota(Nota n, String ruta) {
+
+		new Archivo().AgregarContenido(ruta, n.getTitulo() + "," + n.getId() + "," + n.getFecha() + "," + n.getRuta()
+				+ ".txt" + "," + n.getUrgencia() + "," + n.getContenido());
+
+	}
 
 	// Metodo para extraer los nombres de las notas del txt
 
@@ -42,6 +40,7 @@ public class DAONotas {
 		File dir = new File("Notas");
 
 		File[] files = dir.listFiles(new FilenameFilter() {
+
 			public boolean accept(File dir, String name) {
 				return name.toLowerCase().endsWith(".txt");
 			}
@@ -75,6 +74,7 @@ public class DAONotas {
 		File dir = new File(ruta);
 
 		File[] files = dir.listFiles(new FilenameFilter() {
+
 			public boolean accept(File dir, String name) {
 				return name.toLowerCase().endsWith(".txt");
 			}
