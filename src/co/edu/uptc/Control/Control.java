@@ -56,7 +56,7 @@ public class Control {
 		String fecha = dia + "/" + mes + "/" + anio;
 
 		n.setTitulo(titulo);
-		n.setContenido(contenido);
+		n.setContenido(contenido.replace("\n", "\\n"));
 
 		int id = (int) (Math.random() * (1000));
 		n.setId(id);
@@ -115,10 +115,15 @@ public class Control {
 
 	}
 
-	public void editarArchivo(Nota n, String ruta) {
+	public void editarArchivo(Nota n, String titulo, String contenido, String ruta, int urgencia) {
 
+		Nota n1 = new Nota();
+		n1.setTitulo(titulo);
+		n1.setContenido(contenido);
+		n1.setUrgencia(urgencia);
+		
 		eliminarNota(n, ruta);
-		agregarNota(n.getTitulo(), n.getContenido(), n.getRuta(), n.getUrgencia());
+		agregarNota(n1.getTitulo(), n1.getContenido(), ruta, n1.getUrgencia());
 
 	}
 
