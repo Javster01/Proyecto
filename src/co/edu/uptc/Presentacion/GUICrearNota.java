@@ -132,9 +132,11 @@ public class GUICrearNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				Control c = new Control(ruta);
+				
 				if (!contenido.getText().isEmpty() && !titulo.getText().isEmpty()) {
 					
-					Control c = new Control(ruta);
+					
 					c.agregarNota(titulo.getText(), contenido.getText(), "Notas", 0);
 
 					GUIListadoNotas notas = new GUIListadoNotas(ruta);
