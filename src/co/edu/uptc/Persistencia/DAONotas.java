@@ -1,10 +1,7 @@
 package co.edu.uptc.Persistencia;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 import co.edu.uptc.Modelo.*;
 import co.edu.uptc.Utilidades.Archivo;
@@ -12,15 +9,6 @@ import co.edu.uptc.Utilidades.Archivo;
 public class DAONotas {
 
 	// titulo, id, fecha, ruta, urgencia, contenido
-
-//	private String ruta;
-
-//	private String crearRuta(String nomCarpeta, Nota n) {
-//
-//		ruta = nomCarpeta + "/" + n.getTitulo() + ".txt";
-//
-//		return ruta;
-//	}
 
 	// Metodo para agregar notas
 
