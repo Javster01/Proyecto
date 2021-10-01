@@ -16,7 +16,7 @@ public class GUICrearNota extends JFrame {
 	private JTextArea contenido;
 	private JButton volver, guardar;
 
-	public GUICrearNota() {
+	public GUICrearNota(String ruta) {
 
 		// inicializar componentes
 
@@ -39,12 +39,12 @@ public class GUICrearNota extends JFrame {
 
 		// Adicionando componentes
 
-		add(AreaTrabajo());
+		add(AreaTrabajo(ruta));
 
 		setVisible(true);
 	}
 
-	private JPanel AreaTrabajo() {
+	private JPanel AreaTrabajo(String ruta) {
 
 		panelFondo.setBackground(getForeground());
 
@@ -65,7 +65,7 @@ public class GUICrearNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUIListadoNotas notas = new GUIListadoNotas();
+				GUIListadoNotas notas = new GUIListadoNotas(ruta);
 				notas.setVisible(true);
 				notas.setResizable(true);
 				notas.setLocationRelativeTo(null);
@@ -134,10 +134,10 @@ public class GUICrearNota extends JFrame {
 
 				if (!contenido.getText().isEmpty() && !titulo.getText().isEmpty()) {
 					
-					Control c = new Control();
+					Control c = new Control(ruta);
 					c.agregarNota(titulo.getText(), contenido.getText(), "Notas", 0);
 
-					GUIListadoNotas notas = new GUIListadoNotas();
+					GUIListadoNotas notas = new GUIListadoNotas(ruta);
 					notas.setVisible(true);
 					notas.setResizable(false);
 					notas.setLocationRelativeTo(null);
