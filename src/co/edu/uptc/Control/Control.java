@@ -121,7 +121,7 @@ public class Control {
 		n1.setTitulo(titulo);
 		n1.setContenido(contenido);
 		n1.setUrgencia(urgencia);
-		
+
 		eliminarNota(n, ruta);
 		agregarNota(n1.getTitulo(), n1.getContenido(), ruta, n1.getUrgencia());
 

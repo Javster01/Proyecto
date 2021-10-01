@@ -162,7 +162,12 @@ public class GUIMostrarNota extends JFrame {
 				} else if (contenido.getText().equals(c.buscarNota(nombreNota).getContenido())
 						&& titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
 
-					JOptionPane.showMessageDialog(null, "No se han hecho cambios en al nota");
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para eliminar", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
+
 				}
 			}
 		});

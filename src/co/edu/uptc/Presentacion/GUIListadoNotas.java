@@ -128,7 +128,11 @@ public class GUIListadoNotas extends JFrame {
 
 				} else if (listaNotas.getSelectedValue() == null) {
 
-					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para ver");
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para eliminar", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
@@ -143,9 +147,21 @@ public class GUIListadoNotas extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				Control c = new Control(ruta);
-				c.eliminarNota(c.buscarNota(listaNotas.getSelectedValue()), ruta);
 
-				refrescar();
+				if (listaNotas.getSelectedValue() == null) {
+
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para eliminar", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
+
+				} else {
+
+					c.eliminarNota(c.buscarNota(listaNotas.getSelectedValue()), ruta);
+
+					refrescar();
+				}
 
 			}
 		});

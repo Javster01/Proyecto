@@ -57,32 +57,6 @@ public class Archivo {
 
 	}
 
-	public String ContenidoArchivoTotal(String ruta) {
-
-		File archivo = new File(ruta);
-		String cadena = null;
-		String cadenaFinal = "++";
-
-		try {
-
-			FileReader f = new FileReader(archivo);
-			BufferedReader b = new BufferedReader(f);
-
-			while ((cadena = b.readLine()) != null) {
-				cadenaFinal = cadena + "++" + cadenaFinal;
-			}
-
-			b.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-		return cadenaFinal;
-
-	}
-
 	public ArrayList<String> ContenidoArchivo(String ruta) {
 
 		File archivo = new File(ruta);
