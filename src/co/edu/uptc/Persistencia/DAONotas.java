@@ -12,41 +12,20 @@ public class DAONotas {
 
 	// Metodo para agregar notas
 
+	/**
+	 * En el metodo guardarNota se crea un nuevo objeto de tipo archivo el cual se utiliza
+	 * para crear un nuevo archivo .txt con en el metodo agregarContenido de archivo
+	 * 
+	 * @author Luis Pinto
+	 * @param Nota String
+	 * 
+	 **/
 	public void guardarNota(Nota n, String ruta) {
 
 		new Archivo().AgregarContenido(ruta, n.getTitulo() + "," + n.getId() + "," + n.getFecha() + "," + n.getRuta()
 				+ "," + n.getUrgencia() + "," + n.getContenido());
 
 	}
-
-//	// Metodo para extraer los nombres de las notas del txt
-//
-//	public String[] getNombresArchivos(String ruta) {
-//
-//		ArrayList<String> nombresArchivos = new ArrayList<>();
-//
-//		File dir = new File(ruta);
-//
-//		File[] files = dir.listFiles(new FilenameFilter() {
-//
-//			public boolean accept(File dir, String name) {
-//				return name.toLowerCase().endsWith(".txt");
-//			}
-//		});
-//
-//		for (int i = 0; i < files.length; i++) {
-//
-//			nombresArchivos.add(files[i].getName().replace(".txt", ""));
-//		}
-//
-//		String[] nombres = new String[nombresArchivos.size()];
-//
-//		for (int i = 0; i < nombres.length; i++) {
-//			nombres[i] = nombresArchivos.get(i);
-//		}
-//
-//		return nombres;
-//	}
 
 	// Metodo para extraer las notas del txt
 

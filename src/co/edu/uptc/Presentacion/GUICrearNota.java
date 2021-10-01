@@ -149,7 +149,7 @@ public class GUICrearNota extends JFrame {
 					UIManager.put("OptionPane.background", Color.white);
 					UIManager.put("Panel.background", Color.white);
 
-					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para eliminar", "Advertencia",
+					JOptionPane.showMessageDialog(null, "No se han llenado los cambios requeridos", "Advertencia",
 							JOptionPane.WARNING_MESSAGE);
 				}
 			}
