@@ -10,38 +10,9 @@ import java.util.ArrayList;
 
 public class Archivo {
 
-	public boolean SobreescribirArchivo(String ruta, String texto) {
-
-		File archivo = new File(ruta);
-		boolean existe = false;
-		BufferedWriter bw;
-
-		try {
-			if (archivo.exists()) {
-				bw = new BufferedWriter(new FileWriter(archivo));
-				bw.write(texto + ";\n");
-				existe = true;
-			} else {
-				bw = new BufferedWriter(new FileWriter(archivo));
-				bw.write(texto);
-				existe = false;
-
-			}
-			bw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return existe;
-
-	}
-
 	public void AgregarContenido(String ruta, String texto) {
 
-		// String ruta = "Resources/" + nombre + ".txt";
 		File archivo = new File(ruta);
-		
 
 		try {
 
@@ -51,7 +22,7 @@ public class Archivo {
 			out.close();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -76,7 +47,7 @@ public class Archivo {
 			b.close();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 
 		}
@@ -87,31 +58,16 @@ public class Archivo {
 	public void crearDirectorio(String Ruta) {
 
 		File file = new File(Ruta);
+
 		try {
+
 			file.mkdir();
+
 		} catch (Exception e) {
+
 			e.printStackTrace();
+
 			System.err.println("No se pudo crear el archivo");
-		}
-	}
-
-	public void resetArchivo(String ruta) {
-
-		File a = new File(ruta);
-		BufferedWriter bw;
-
-		if (a.exists()) {
-
-			try {
-
-				bw = new BufferedWriter(new FileWriter(a));
-				bw.write("");
-
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
-
 		}
 	}
 
