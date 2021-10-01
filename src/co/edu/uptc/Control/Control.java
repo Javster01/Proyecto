@@ -2,6 +2,8 @@ package co.edu.uptc.Control;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import co.edu.uptc.Modelo.*;
 import co.edu.uptc.Persistencia.*;
 
@@ -13,14 +15,37 @@ public class Control {
 
 	public Control(String ruta) {
 
-		DAONotas d = new DAONotas();
-		nombresArchivos = d.getNombresArchivos(ruta);
 		ids = new ArrayList<>();
-		listadoNotas = new DAONotas().getNotas("Notas/");
+		listadoNotas = new DAONotas().getNotas(ruta + "/");
+		organizarAlfabeticamente();
+		nombresArchivos = new String[listadoNotas.size()];
+
+	}
+
+	public void organizarAlfabeticamente() {
+
+		Collections.sort(listadoNotas, new Comparator<Nota>() {
+
+			@Override
+			public int compare(Nota o1, Nota o2) {
+
+				String nota1 = o1.getTitulo();
+				String nota2 = o2.getTitulo();
+
+				return nota1.compareTo(nota2);
+			}
+		});
 
 	}
 
 	public String[] getNombresArchivos() {
+
+		for (int i = 0; i < nombresArchivos.length; i++) {
+			
+			nombresArchivos[i] = listadoNotas.get(i).getTitulo();
+
+		}
+
 		return nombresArchivos;
 	}
 
@@ -55,8 +80,8 @@ public class Control {
 
 		String fecha = dia + "/" + mes + "/" + anio;
 
-		n.setTitulo(titulo);
-		n.setContenido(contenido.replace("\n", "\\n"));
+		n.setTitulo(titulo.replace(",", "_").replace(";", "-"));
+		n.setContenido(contenido.replace("\n", "\\n").replace(",", "_").replace(";", "-"));
 
 		int id = (int) (Math.random() * (1000));
 		n.setId(id);
@@ -71,7 +96,7 @@ public class Control {
 		ids.add(id);
 
 		n.setUrgencia(urgencia);
-		n.setRuta(ruta + "/" + n.getTitulo() + ".txt");
+		n.setRuta(ruta + "/" + n.getTitulo() + "°¬°" + n.getId() + ".txt");
 		n.setFecha(fecha);
 
 		DAONotas notas = new DAONotas();
@@ -82,16 +107,15 @@ public class Control {
 
 	}
 
-	public Nota buscarNota(String nombre) {
+	public Nota getNota(int indice) {
 
-		for (Nota nota : listadoNotas) {
+		Nota nota = new Nota();
 
-			if (nombre.equalsIgnoreCase(nota.getTitulo())) {
+		if (listadoNotas.get(indice) != null) {
 
-				return nota;
+			nota = listadoNotas.get(indice);
 
-			}
-
+			return nota;
 		}
 
 		return null;

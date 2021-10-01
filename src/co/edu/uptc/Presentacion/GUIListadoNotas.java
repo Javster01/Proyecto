@@ -77,6 +77,10 @@ public class GUIListadoNotas extends JFrame {
 		listaNotas.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
 		listaNotas.setBorder(new LineBorder(new Color(0, 0, 0, 0), 14));
 		listaNotas.setListData(c.getNombresArchivos());
+		DefaultListCellRenderer cellRenderer = (DefaultListCellRenderer)listaNotas.getCellRenderer();
+		cellRenderer.setHorizontalAlignment(SwingConstants .CENTER);
+		listaNotas.setPreferredSize(new Dimension(280,100));
+		listaNotas.setAlignmentX(getX());
 		listaNotas.setVisibleRowCount(10);
 
 		notasPanel.add(listaNotas);
@@ -119,7 +123,9 @@ public class GUIListadoNotas extends JFrame {
 
 				if (listaNotas.getSelectedValue() != null) {
 
-					GUIMostrarNota frame = new GUIMostrarNota(listaNotas.getSelectedValue(), ruta);
+					int indice = listaNotas.getSelectedIndex();
+
+					GUIMostrarNota frame = new GUIMostrarNota(indice, ruta);
 					frame.setVisible(true);
 					frame.setResizable(true);
 					frame.setLocationRelativeTo(null);
@@ -158,7 +164,8 @@ public class GUIListadoNotas extends JFrame {
 
 				} else {
 
-					c.eliminarNota(c.buscarNota(listaNotas.getSelectedValue()), ruta);
+					int indice = listaNotas.getSelectedIndex();
+					c.eliminarNota(c.getNota(indice), ruta);
 
 					refrescar();
 				}

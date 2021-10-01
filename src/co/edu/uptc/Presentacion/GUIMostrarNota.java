@@ -16,7 +16,7 @@ public class GUIMostrarNota extends JFrame {
 	private JTextArea contenido;
 	private JButton volver, guardarCambios, agregarContraseña;
 
-	public GUIMostrarNota(String nombreNota, String ruta) {
+	public GUIMostrarNota(int índice, String ruta) {
 
 		// inicializar componentes
 
@@ -36,26 +36,30 @@ public class GUIMostrarNota extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(im.getImage());
 		setSize(360, 630);
-		setTitle(nombreNota);
+		Control c = new Control(ruta);
+		setTitle(c.getNota(índice).getTitulo());
 		getContentPane().setBackground(Color.WHITE);
 
 		// Adicionando componentes
 
-		add(AreaTrabajo(nombreNota, ruta));
+		add(areaTrabajo(índice, ruta));
 
 		setVisible(true);
 	}
 
-	private JPanel AreaTrabajo(String nombreNota, String ruta) {
+	private JPanel areaTrabajo(int indice, String ruta) {
 
 		panelFondo.setBackground(getForeground());
+		Control c = new Control(ruta);
 
 		// panel del ecabezado
 
 		panelEncabezado.setBackground(getForeground());
 		panelEncabezado.setLayout(new BorderLayout());
 
-		titulo.setText(nombreNota);
+		titulo.setPreferredSize(new DimensionUIResource(300, 30));
+		titulo.setText(c.getNota(indice).getTitulo());
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
 		titulo.setBorder(new LineBorder(new Color(0, 0, 0, 0), 0));
 
@@ -116,12 +120,10 @@ public class GUIMostrarNota extends JFrame {
 		notasPanel.setBackground(getForeground());
 		notasPanel.setBorder(new LineBorder(Color.BLACK));
 
-		Control c = new Control(ruta);
-
 		contenido.setPreferredSize(new DimensionUIResource(285, 305));
 		contenido.setLineWrap(true);
 		contenido.setWrapStyleWord(true);
-		contenido.setText(c.buscarNota(nombreNota).getContenido());
+		contenido.setText(c.getNota(indice).getContenido());
 
 		contenido.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
 
@@ -147,11 +149,11 @@ public class GUIMostrarNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (!contenido.getText().equals(c.buscarNota(nombreNota).getContenido())
-						|| !titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
+				if (!contenido.getText().equals(c.getNota(indice).getContenido())
+						|| !titulo.getText().equals(c.getNota(indice).getTitulo())) {
 
-					c.editarArchivo(c.buscarNota(nombreNota), titulo.getText(), contenido.getText(), ruta,
-							c.buscarNota(nombreNota).getUrgencia());
+					c.editarArchivo(c.getNota(indice), titulo.getText(), contenido.getText(), ruta,
+							c.getNota(indice).getUrgencia());
 
 					GUIListadoNotas notas = new GUIListadoNotas(ruta);
 					notas.setVisible(true);
@@ -159,8 +161,8 @@ public class GUIMostrarNota extends JFrame {
 					notas.setLocationRelativeTo(null);
 					setVisible(false);
 
-				} else if (contenido.getText().equals(c.buscarNota(nombreNota).getContenido())
-						&& titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
+				} else if (contenido.getText().equals(c.getNota(indice).getContenido())
+						&& titulo.getText().equals(c.getNota(indice).getTitulo())) {
 
 					UIManager.put("OptionPane.background", Color.white);
 					UIManager.put("Panel.background", Color.white);
