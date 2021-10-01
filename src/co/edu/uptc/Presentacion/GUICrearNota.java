@@ -52,7 +52,7 @@ public class GUICrearNota extends JFrame {
 
 		panelEncabezado.setBackground(getForeground());
 		panelEncabezado.setLayout(new BorderLayout());
-		
+
 		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
 		titulo.setBorder(new LineBorder(Color.BLACK));
 		titulo.setPreferredSize(new DimensionUIResource(300, 30));
@@ -133,10 +133,9 @@ public class GUICrearNota extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				Control c = new Control(ruta);
-				
+
 				if (!contenido.getText().isEmpty() && !titulo.getText().isEmpty()) {
-					
-					
+
 					c.agregarNota(titulo.getText(), contenido.getText(), "Notas", 0);
 
 					GUIListadoNotas notas = new GUIListadoNotas(ruta);
@@ -147,7 +146,11 @@ public class GUICrearNota extends JFrame {
 
 				} else if (contenido.getText().isEmpty() || titulo.getText().isEmpty()) {
 
-					JOptionPane.showMessageDialog(null, "No se han hecho los cambios necesarios en al nota");
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para eliminar", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
