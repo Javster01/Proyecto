@@ -83,7 +83,7 @@ public class DAONotas {
 				n.setFecha(linea[2]);
 				n.setRuta(linea[3]);
 				n.setUrgencia(Integer.parseInt(linea[4]));
-				n.setContenido(linea[5].replace(";", ""));
+				n.setContenido(linea[5].replace(";", "").replace("\\n", "\n"));
 
 				notas.add(n);
 

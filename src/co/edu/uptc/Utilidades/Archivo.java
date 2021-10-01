@@ -121,13 +121,6 @@ public class Archivo {
 		}
 	}
 
-	public void eliminarArchivo(String ruta) {
-
-		File a = new File(ruta);
-
-		a.delete();
-	}
-
 	public void resetArchivo(String ruta) {
 
 		File a = new File(ruta);

@@ -150,7 +150,8 @@ public class GUIMostrarNota extends JFrame {
 				if (!contenido.getText().equals(c.buscarNota(nombreNota).getContenido())
 						|| !titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
 
-					c.editarArchivo(c.buscarNota(nombreNota), ruta);
+					c.editarArchivo(c.buscarNota(nombreNota), titulo.getText(), contenido.getText(), ruta,
+							c.buscarNota(nombreNota).getUrgencia());
 
 					GUIListadoNotas notas = new GUIListadoNotas(ruta);
 					notas.setVisible(true);
