@@ -1,1 +1,1 @@
-Nota 4,1,fecha,Notas/Nota de prueba_4.txt,1,contenido;
+Nota 4,533,30/8/2021,Notas/Nota 4.txt,0,Esta es la nota 4;

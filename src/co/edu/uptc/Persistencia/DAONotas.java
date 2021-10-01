@@ -13,7 +13,7 @@ public class DAONotas {
 
 	// titulo, id, fecha, ruta, urgencia, contenido
 
-	private String ruta;
+//	private String ruta;
 
 //	private String crearRuta(String nomCarpeta, Nota n) {
 //
@@ -27,17 +27,17 @@ public class DAONotas {
 	public void guardarNota(Nota n, String ruta) {
 
 		new Archivo().AgregarContenido(ruta, n.getTitulo() + "," + n.getId() + "," + n.getFecha() + "," + n.getRuta()
-				+ ".txt" + "," + n.getUrgencia() + "," + n.getContenido());
+				+ "," + n.getUrgencia() + "," + n.getContenido());
 
 	}
 
 	// Metodo para extraer los nombres de las notas del txt
 
-	public String[] getNombresArchivos() {
+	public String[] getNombresArchivos(String ruta) {
 
 		ArrayList<String> nombresArchivos = new ArrayList<>();
 
-		File dir = new File("Notas");
+		File dir = new File(ruta);
 
 		File[] files = dir.listFiles(new FilenameFilter() {
 
@@ -108,21 +108,25 @@ public class DAONotas {
 
 	// Metodo para resetear el archivo para modifcar algo en la nota
 
-	public void resetArchivo(Nota n) {
+	public void eliminarArchivo(Nota n, String ruta) {
 
-		File a = new File(n.getRuta());
-		BufferedWriter bw;
+		File dir = new File(ruta);
 
-		if (a.exists()) {
+		File[] files = dir.listFiles(new FilenameFilter() {
 
-			try {
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().endsWith(".txt");
+			}
+		});
 
-				bw = new BufferedWriter(new FileWriter(a));
-				bw.write("");
+		for (int i = 0; i < files.length; i++) {
 
-			} catch (IOException e) {
+			if (n.getRuta().equalsIgnoreCase(files[i].getPath().toString().replace("\\", "/"))) {
 
-				e.printStackTrace();
+				File a = files[i];
+
+				a.delete();
+
 			}
 
 		}

@@ -8,14 +8,14 @@ import co.edu.uptc.Persistencia.*;
 public class Control {
 
 	private ArrayList<Nota> listadoNotas;
+	private ArrayList<Integer> ids;
 	private String[] nombresArchivos;
 
-	public Control() {
+	public Control(String ruta) {
 
 		DAONotas d = new DAONotas();
-
-		nombresArchivos = d.getNombresArchivos();
-
+		nombresArchivos = d.getNombresArchivos(ruta);
+		ids = new ArrayList<>();
 		listadoNotas = new DAONotas().getNotas("Notas/");
 
 	}
@@ -24,16 +24,21 @@ public class Control {
 		return nombresArchivos;
 	}
 
-	public void setNombresArchivos(String[] nombresArchivos) {
-		this.nombresArchivos = nombresArchivos;
-	}
-
 	public ArrayList<Nota> getListadoNotas() {
 		return listadoNotas;
 	}
 
-	public void setListadoNotas(ArrayList<Nota> listadoNotas) {
-		this.listadoNotas = listadoNotas;
+	private boolean seRepiteId(Nota n) {
+
+		for (Integer integer : ids) {
+
+			if (integer == n.getId()) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void agregarNota(String titulo, String contenido, String ruta, int urgencia) {
@@ -52,7 +57,19 @@ public class Control {
 
 		n.setTitulo(titulo);
 		n.setContenido(contenido);
-		n.setId(listadoNotas.size() + 1);
+
+		int id = (int) (Math.random() * (1000));
+		n.setId(id);
+
+		while (seRepiteId(n) == true) {
+
+			id = (int) (Math.random() * (1000));
+
+		}
+
+		n.setId(id);
+		ids.add(id);
+
 		n.setUrgencia(urgencia);
 		n.setRuta(ruta + "/" + n.getTitulo() + ".txt");
 		n.setFecha(fecha);
@@ -61,7 +78,7 @@ public class Control {
 
 		notas.guardarNota(n, n.getRuta());
 
-		listadoNotas = notas.getNotas("Notas");
+		listadoNotas = notas.getNotas(ruta);
 
 	}
 
@@ -80,34 +97,28 @@ public class Control {
 		return null;
 	}
 
-	public void eliminarNota(Nota n) {
+	public void eliminarNota(Nota n, String ruta) {
 
-		ArrayList<Nota> lista = new ArrayList<Nota>();
-		lista = listadoNotas;
+		ArrayList<Nota> lista = listadoNotas;
 
 		for (int i = 0; i < lista.size(); i++) {
 
 			if (lista.get(i).getId() == n.getId()) {
 
+				new DAONotas().eliminarArchivo(n, ruta);
 				lista.remove(n);
 
 			}
 		}
 
-		sobreEscribirArchivo(lista, n);
+		listadoNotas = lista;
 
 	}
 
-	private void sobreEscribirArchivo(ArrayList<Nota> lista, Nota n) {
+	public void editarArchivo(Nota n, String ruta) {
 
-		new DAONotas().resetArchivo(n);
-
-		for (int i = 0; i < lista.size(); i++) {
-
-			agregarNota(lista.get(i).getTitulo(), lista.get(i).getContenido(), lista.get(i).getRuta(),
-					lista.get(i).getUrgencia());
-
-		}
+		eliminarNota(n, ruta);
+		agregarNota(n.getTitulo(), n.getContenido(), n.getRuta(), n.getUrgencia());
 
 	}
 

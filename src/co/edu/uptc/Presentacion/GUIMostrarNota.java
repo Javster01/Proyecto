@@ -16,7 +16,7 @@ public class GUIMostrarNota extends JFrame {
 	private JTextArea contenido;
 	private JButton volver, guardarCambios, agregarContraseña;
 
-	public GUIMostrarNota(String nombreNota) {
+	public GUIMostrarNota(String nombreNota, String ruta) {
 
 		// inicializar componentes
 
@@ -41,12 +41,12 @@ public class GUIMostrarNota extends JFrame {
 
 		// Adicionando componentes
 
-		add(AreaTrabajo(nombreNota));
+		add(AreaTrabajo(nombreNota, ruta));
 
 		setVisible(true);
 	}
 
-	private JPanel AreaTrabajo(String nombreNota) {
+	private JPanel AreaTrabajo(String nombreNota, String ruta) {
 
 		panelFondo.setBackground(getForeground());
 
@@ -58,7 +58,7 @@ public class GUIMostrarNota extends JFrame {
 		titulo.setText(nombreNota);
 		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
 		titulo.setBorder(new LineBorder(new Color(0, 0, 0, 0), 0));
-		
+
 		agregarContraseña.setIcon(new ImageIcon("RecursosGUI/contrasena.png"));
 		agregarContraseña.setBackground(Color.WHITE);
 		agregarContraseña.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
@@ -71,7 +71,7 @@ public class GUIMostrarNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUIListadoNotas notas = new GUIListadoNotas();
+				GUIListadoNotas notas = new GUIListadoNotas(ruta);
 				notas.setVisible(true);
 				notas.setResizable(true);
 				notas.setLocationRelativeTo(null);
@@ -89,7 +89,7 @@ public class GUIMostrarNota extends JFrame {
 		pVolver.setBackground(getForeground());
 		pVolver.setLayout(new FlowLayout(FlowLayout.LEFT));
 		pVolver.add(volver);
-		
+
 		JPanel pContraseña = new JPanel();
 		pContraseña.setBackground(getForeground());
 		pContraseña.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -116,7 +116,7 @@ public class GUIMostrarNota extends JFrame {
 		notasPanel.setBackground(getForeground());
 		notasPanel.setBorder(new LineBorder(Color.BLACK));
 
-		Control c = new Control();
+		Control c = new Control(ruta);
 
 		contenido.setPreferredSize(new DimensionUIResource(285, 305));
 		contenido.setLineWrap(true);
@@ -147,18 +147,19 @@ public class GUIMostrarNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (!contenido.getText().equals(c.buscarNota(nombreNota).getContenido()) || !titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
+				if (!contenido.getText().equals(c.buscarNota(nombreNota).getContenido())
+						|| !titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
 
-					c.buscarNota(nombreNota).setContenido(contenido.getText());
-					c.eliminarNota(c.buscarNota(nombreNota));
+					c.editarArchivo(c.buscarNota(nombreNota), ruta);
 
-					GUIListadoNotas notas = new GUIListadoNotas();
+					GUIListadoNotas notas = new GUIListadoNotas(ruta);
 					notas.setVisible(true);
 					notas.setResizable(false);
 					notas.setLocationRelativeTo(null);
 					setVisible(false);
 
-				} else if (contenido.getText().equals(c.buscarNota(nombreNota).getContenido()) && titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
+				} else if (contenido.getText().equals(c.buscarNota(nombreNota).getContenido())
+						&& titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
 
 					JOptionPane.showMessageDialog(null, "No se han hecho cambios en al nota");
 				}
