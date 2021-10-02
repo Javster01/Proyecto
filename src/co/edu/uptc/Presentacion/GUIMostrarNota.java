@@ -14,9 +14,9 @@ public class GUIMostrarNota extends JFrame {
 	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro;
 	private JTextField titulo;
 	private JTextArea contenido;
-	private JButton volver, guardarCambios, agregarContraseña;
+	private JButton volver, guardarCambios, agregarContrasena, agregarPrioridad;
 
-	public GUIMostrarNota(int índice, String ruta) {
+	public GUIMostrarNota(int indice, String ruta) {
 
 		// inicializar componentes
 
@@ -28,7 +28,8 @@ public class GUIMostrarNota extends JFrame {
 		contenido = new JTextArea();
 		volver = new JButton();
 		guardarCambios = new JButton();
-		agregarContraseña = new JButton();
+		agregarContrasena = new JButton();
+		agregarPrioridad = new JButton(new ImageIcon("RecursosGUI/priorizar.png"));
 
 		// Configuracion del Frame
 
@@ -37,12 +38,12 @@ public class GUIMostrarNota extends JFrame {
 		setIconImage(im.getImage());
 		setSize(360, 630);
 		Control c = new Control(ruta);
-		setTitle(c.getNota(índice).getTitulo());
+		setTitle(c.getNota(indice).getTitulo());
 		getContentPane().setBackground(Color.WHITE);
 
 		// Adicionando componentes
 
-		add(areaTrabajo(índice, ruta));
+		add(areaTrabajo(indice, ruta));
 
 		setVisible(true);
 	}
@@ -63,9 +64,25 @@ public class GUIMostrarNota extends JFrame {
 		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
 		titulo.setBorder(new LineBorder(new Color(0, 0, 0, 0), 0));
 
-		agregarContraseña.setIcon(new ImageIcon("RecursosGUI/contrasena.png"));
-		agregarContraseña.setBackground(Color.WHITE);
-		agregarContraseña.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		agregarContrasena.setIcon(new ImageIcon("RecursosGUI/bloquear.png"));
+		agregarContrasena.setBackground(Color.WHITE);
+		agregarContrasena.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+
+		agregarPrioridad.setBackground(Color.WHITE);
+		agregarPrioridad.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		agregarPrioridad.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				GUIListadoNotas notas = new GUIListadoNotas(ruta);
+				notas.setVisible(true);
+				notas.setResizable(true);
+				notas.setLocationRelativeTo(null);
+				setVisible(false);
+			}
+
+		});
 
 		volver.setIcon(new ImageIcon("RecursosGUI/flecha.png"));
 		volver.setBackground(Color.WHITE);
@@ -94,10 +111,11 @@ public class GUIMostrarNota extends JFrame {
 		pVolver.setLayout(new FlowLayout(FlowLayout.LEFT));
 		pVolver.add(volver);
 
-		JPanel pContraseña = new JPanel();
-		pContraseña.setBackground(getForeground());
-		pContraseña.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		pContraseña.add(agregarContraseña);
+		JPanel pContrasena = new JPanel();
+		pContrasena.setBackground(getForeground());
+		pContrasena.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		pContrasena.add(agregarPrioridad);
+		pContrasena.add(agregarContrasena);
 
 		JPanel pTituto = new JPanel();
 		pTituto.setBackground(getForeground());
@@ -105,7 +123,7 @@ public class GUIMostrarNota extends JFrame {
 		pTituto.add(titulo);
 
 		pVT.add(pVolver, BorderLayout.WEST);
-		pVT.add(pContraseña, BorderLayout.EAST);
+		pVT.add(pContrasena, BorderLayout.EAST);
 		pVT.add(pTituto, BorderLayout.SOUTH);
 
 		panelEncabezado.add(pVT, BorderLayout.CENTER);
@@ -167,9 +185,16 @@ public class GUIMostrarNota extends JFrame {
 					UIManager.put("OptionPane.background", Color.white);
 					UIManager.put("Panel.background", Color.white);
 
-					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para eliminar", "Advertencia",
+					JOptionPane.showMessageDialog(null, "No se ha realizado ningun cambio", "Advertencia",
 							JOptionPane.WARNING_MESSAGE);
 
+				} else if (titulo.getText().isEmpty() || titulo.getText().isEmpty()) {
+
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "Este titulo no puede estar vacio", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
