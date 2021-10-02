@@ -15,6 +15,7 @@ public class GUIMostrarNota extends JFrame {
 	private JTextField titulo;
 	private JTextArea contenido;
 	private JButton volver, guardarCambios, agregarContrasena, agregarPrioridad;
+	private JComboBox<String> orden;
 
 	public GUIMostrarNota(int indice, String ruta) {
 
