@@ -15,7 +15,9 @@ public class GUIListadoNotas extends JFrame {
 	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro, notasPanel;
 	private JLabel labelTituloEncabezado;
 	private JList<String> listaNotas;
-	private JButton crearNuevaNota, editarNota, borrarNota, volverCarpetas, ordenarUrgencia;
+	private JButton crearNuevaNota, editarNota, borrarNota, volverCarpetas, ordenP, ordenA;
+	private String[] nombresArchivos;
+	private Control c;
 
 	public GUIListadoNotas(String ruta) {
 
@@ -29,8 +31,10 @@ public class GUIListadoNotas extends JFrame {
 		crearNuevaNota = new JButton();
 		borrarNota = new JButton();
 		volverCarpetas = new JButton();
-		ordenarUrgencia = new JButton();
+		ordenP = new JButton();
+		ordenA = new JButton();
 		notasPanel = new JPanel();
+		c = new Control(ruta);
 
 		// Configuracion del Frame
 
@@ -61,15 +65,34 @@ public class GUIListadoNotas extends JFrame {
 		labelTituloEncabezado.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 50));
 		panelEncabezado.add(labelTituloEncabezado);
 
-		ordenarUrgencia.setIcon(new ImageIcon("RecursosGUI/orden1.png"));
-		ordenarUrgencia.setBackground(Color.WHITE);
-		ordenarUrgencia.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
-		ordenarUrgencia.addActionListener(new ActionListener() {
+		ordenP.setIcon(new ImageIcon("RecursosGUI/orden2.png"));
+		ordenP.setBackground(Color.WHITE);
+		ordenP.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		ordenP.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				
+				c.organizarPrioritariamente();
+				nombresArchivos = c.getNombresArchivos();
+				refrescar(ruta);
+
+			}
+
+		});
+
+		ordenA.setIcon(new ImageIcon("RecursosGUI/orden1.png"));
+		ordenA.setBackground(Color.WHITE);
+		ordenA.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		ordenA.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				c.organizarAlfabeticamente();
+				nombresArchivos = c.getNombresArchivos();
+				refrescar(ruta);
 			}
 
 		});
@@ -98,7 +121,8 @@ public class GUIListadoNotas extends JFrame {
 		JPanel pOrdenar = new JPanel();
 		pOrdenar.setBackground(Color.WHITE);
 		pOrdenar.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		pOrdenar.add(ordenarUrgencia);
+		pOrdenar.add(ordenA);
+		pOrdenar.add(ordenP);
 
 		JPanel pTituto = new JPanel();
 		pTituto.setBackground(Color.WHITE);
@@ -120,12 +144,13 @@ public class GUIListadoNotas extends JFrame {
 		notasPanel.setPreferredSize(new DimensionUIResource(280, 305));
 		notasPanel.setBackground(Color.WHITE);
 		notasPanel.setBorder(new LineBorder(Color.BLACK));
-		Control c = new Control(ruta);
 
 		listaNotas.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
 		listaNotas.setBorder(new LineBorder(new Color(0, 0, 0, 0), 14));
-		listaNotas.setListData(c.getNombresArchivos());
 		
+		nombresArchivos = c.getNombresArchivos();
+		listaNotas.setListData(nombresArchivos);
+
 		DefaultListCellRenderer cellRenderer = (DefaultListCellRenderer) listaNotas.getCellRenderer();
 		cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		listaNotas.setBorder(new LineBorder(Color.WHITE));
@@ -200,8 +225,6 @@ public class GUIListadoNotas extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Control c = new Control(ruta);
-
 				if (listaNotas.getSelectedValue() == null) {
 
 					UIManager.put("OptionPane.background", Color.white);
@@ -273,7 +296,8 @@ public class GUIListadoNotas extends JFrame {
 		crearNuevaNota = new JButton();
 		borrarNota = new JButton();
 		volverCarpetas = new JButton();
-		ordenarUrgencia = new JButton();
+		ordenP = new JButton();
+		ordenA = new JButton();
 		notasPanel = new JPanel();
 
 		actualizarPantalla();
