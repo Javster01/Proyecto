@@ -118,7 +118,7 @@ public class Control {
 	 **/
 
 	private boolean seRepiteId(Nota n) {
-		
+
 		boolean aux = false;
 
 		for (Integer integer : ids) {
