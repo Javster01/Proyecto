@@ -8,7 +8,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Clase con algunos metodos para manipular los archivo que persisten
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 public class Archivo {
+
+	/**
+	 * Metodo para crear una nota y agregarle contenido
+	 * 
+	 * @param String ruta
+	 * 
+	 * @param String texto
+	 * 
+	 **/
 
 	public void AgregarContenido(String ruta, String texto) {
 
@@ -27,6 +43,13 @@ public class Archivo {
 		}
 
 	}
+
+	/**
+	 * Metodo para extraer el contenido dentro de las notas
+	 * 
+	 * @param String ruta
+	 * 
+	 **/
 
 	public ArrayList<String> ContenidoArchivo(String ruta) {
 
@@ -54,6 +77,13 @@ public class Archivo {
 		return finalarray;
 
 	}
+
+	/**
+	 * Metodo para crear carpetas
+	 * 
+	 * @param String ruta
+	 * 
+	 **/
 
 	public void crearDirectorio(String Ruta) {
 

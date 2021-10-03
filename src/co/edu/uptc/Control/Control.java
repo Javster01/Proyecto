@@ -7,19 +7,48 @@ import java.util.Comparator;
 import co.edu.uptc.Modelo.*;
 import co.edu.uptc.Persistencia.*;
 
+/**
+ * Clase para controlar el intercambio de informacion hacia las ventanas
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 public class Control {
 
 	private ArrayList<Nota> listadoNotas;
 	private ArrayList<Integer> ids;
 	private String[] nombresArchivos;
+	private boolean orden;
+
+	/**
+	 * Constructor para crear y configurar el frame principal
+	 * 
+	 * @param String ruta
+	 * 
+	 **/
 
 	public Control(String ruta) {
 
 		ids = new ArrayList<>();
 		listadoNotas = new DAONotas().getNotas(ruta + "/");
 		nombresArchivos = new String[listadoNotas.size()];
+		organizarAlfabeticamente();
+		orden = true;
 
 	}
+
+	public boolean getOrden() {
+		return orden;
+	}
+
+	public void setOrden(boolean orden) {
+		this.orden = orden;
+	}
+
+	/**
+	 * Metodo para organizar las notas por orden alfabetico
+	 **/
 
 	public void organizarAlfabeticamente() {
 
@@ -37,6 +66,10 @@ public class Control {
 
 	}
 
+	/**
+	 * Metodo para organizar las notas por orden prioritario
+	 **/
+
 	public void organizarPrioritariamente() {
 
 		Collections.sort(listadoNotas, new Comparator<Nota>() {
@@ -44,14 +77,21 @@ public class Control {
 			@Override
 			public int compare(Nota o1, Nota o2) {
 
-				Integer nota1 = o1.getUrgencia();
-				Integer nota2 = o2.getUrgencia();
+				Integer nota1 = o1.getPrioridad();
+				Integer nota2 = o2.getPrioridad();
 
 				return nota2.compareTo(nota1);
 			}
 		});
 
 	}
+
+	/**
+	 * Metodo para traer el nombre de todas las notas
+	 * 
+	 * @return String nombresArchivos
+	 * 
+	 **/
 
 	public String[] getNombresArchivos() {
 
@@ -68,20 +108,44 @@ public class Control {
 		return listadoNotas;
 	}
 
+	/**
+	 * Metodo para verificar si se repite el id de una nota
+	 * 
+	 * @param Nota n
+	 * 
+	 * @return boolean aux
+	 * 
+	 **/
+
 	private boolean seRepiteId(Nota n) {
+		
+		boolean aux = false;
 
 		for (Integer integer : ids) {
 
 			if (integer == n.getId()) {
 
-				return true;
+				aux = true;
 			}
 		}
 
-		return false;
+		return aux;
 	}
 
-	public void agregarNota(String titulo, String contenido, String ruta, int urgencia) {
+	/**
+	 * Metodo para crear crear una nota
+	 * 
+	 * @param String titulo
+	 * 
+	 * @param String contenido
+	 * 
+	 * @param String ruta
+	 * 
+	 * @param int    Prioridad
+	 * 
+	 **/
+
+	public void agregarNota(String titulo, String contenido, String ruta, int Prioridad) {
 
 		Nota n = new Nota();
 
@@ -110,7 +174,7 @@ public class Control {
 		n.setId(id);
 		ids.add(id);
 
-		n.setUrgencia(urgencia);
+		n.setPrioridad(Prioridad);
 		n.setRuta(ruta + "/" + n.getTitulo() + "°¬°" + n.getId() + ".txt");
 		n.setFecha(fecha);
 
@@ -122,6 +186,15 @@ public class Control {
 
 	}
 
+	/**
+	 * Metodo para traer una nota del arreglo de las notas segun el indice
+	 * 
+	 * @param int indice
+	 * 
+	 * @return Nota nota
+	 * 
+	 **/
+
 	public Nota getNota(int indice) {
 
 		Nota nota = new Nota();
@@ -130,11 +203,22 @@ public class Control {
 
 			nota = listadoNotas.get(indice);
 
-			return nota;
+		} else {
+
+			nota = null;
 		}
 
-		return null;
+		return nota;
 	}
+
+	/**
+	 * Metodo para eliminar una nota
+	 * 
+	 * @param Nota   n
+	 * 
+	 * @param String ruta
+	 * 
+	 **/
 
 	public void eliminarNota(Nota n, String ruta) {
 
@@ -154,15 +238,40 @@ public class Control {
 
 	}
 
-	public void editarArchivo(Nota n, String titulo, String contenido, String ruta, int urgencia) {
+	/**
+	 * Metodo para editar una nota
+	 * 
+	 * @param Nota   n
+	 * 
+	 * @param String titulo
+	 * 
+	 * @param String contenido
+	 * 
+	 * @param String ruta
+	 * 
+	 * @param int    Prioridad
+	 * 
+	 **/
+
+	public void editarArchivo(Nota n, String titulo, String contenido, String ruta, int Prioridad) {
 
 		Nota n1 = new Nota();
 		n1.setTitulo(titulo);
 		n1.setContenido(contenido);
-		n1.setUrgencia(urgencia);
+		n1.setPrioridad(Prioridad);
 
 		eliminarNota(n, ruta);
-		agregarNota(n1.getTitulo(), n1.getContenido(), ruta, n1.getUrgencia());
+		agregarNota(n1.getTitulo(), n1.getContenido(), ruta, n1.getPrioridad());
+
+		if (getOrden() == true) {
+
+			organizarAlfabeticamente();
+
+		} else if (getOrden() == false) {
+
+			organizarPrioritariamente();
+
+		}
 
 	}
 

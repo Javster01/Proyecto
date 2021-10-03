@@ -8,6 +8,13 @@ import javax.swing.plaf.FontUIResource;
 import co.edu.uptc.Control.Control;
 import java.awt.event.*;
 
+/**
+ * Ventana para mostrar el contenido de una nota
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 @SuppressWarnings("serial")
 public class GUIMostrarNota extends JFrame {
 
@@ -19,7 +26,18 @@ public class GUIMostrarNota extends JFrame {
 	private boolean estado;
 	private String[] prioridades;
 
-	public GUIMostrarNota(int indice, String ruta) {
+	/**
+	 * Constructor para crear y configurar el frame principal
+	 * 
+	 * @param int     indice
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 **/
+
+	public GUIMostrarNota(int indice, String ruta, Control c) {
 
 		// inicializar componentes
 
@@ -35,9 +53,9 @@ public class GUIMostrarNota extends JFrame {
 		agregarPrioridad = new JButton(new ImageIcon("RecursosGUI/orden2.png"));
 		prioridades = new String[4];
 		prioridades[0] = "Ninguna";
-		prioridades[1] = "Alta";
+		prioridades[1] = "Baja";
 		prioridades[2] = "Media";
-		prioridades[3] = "Baja";
+		prioridades[3] = "Alta";
 		prioridad = new JComboBox<>(prioridades);
 		estado = false;
 
@@ -47,21 +65,32 @@ public class GUIMostrarNota extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(im.getImage());
 		setSize(360, 630);
-		Control c = new Control(ruta);
 		setTitle(c.getNota(indice).getTitulo());
 		getContentPane().setBackground(Color.WHITE);
 
 		// Adicionando componentes
 
-		add(areaTrabajo(indice, ruta));
+		add(areaTrabajo(indice, ruta, c));
 
 		setVisible(true);
 	}
 
-	private JPanel areaTrabajo(int indice, String ruta) {
+	/**
+	 * Metodo para crear todos los paneles que hay dentro del frame principal
+	 * 
+	 * @param int     indice
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 * @return JPanel AreaTrabajo
+	 * 
+	 **/
+
+	private JPanel areaTrabajo(int indice, String ruta, Control c) {
 
 		panelFondo.setBackground(getForeground());
-		Control c = new Control(ruta);
 
 		// panel del ecabezado
 
@@ -98,19 +127,18 @@ public class GUIMostrarNota extends JFrame {
 					estado = true;
 
 					pComboBox.setVisible(estado);
-					prioridad.getSelectedIndex();
-					System.out.println(prioridad.getSelectedIndex());
+					prioridad.setSelectedIndex(c.getNota(indice).getPrioridad());
 
 				} else if (estado == true) {
 
 					estado = false;
 
 					pComboBox.setVisible(estado);
-
 				}
 			}
+		}
 
-		});
+		);
 
 		volver.setIcon(new ImageIcon("RecursosGUI/flecha.png"));
 		volver.setBackground(Color.WHITE);
@@ -120,7 +148,7 @@ public class GUIMostrarNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUIListadoNotas notas = new GUIListadoNotas(ruta);
+				GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 				notas.setVisible(true);
 				notas.setResizable(true);
 				notas.setLocationRelativeTo(null);
@@ -197,19 +225,21 @@ public class GUIMostrarNota extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (!contenido.getText().equals(c.getNota(indice).getContenido())
-						|| !titulo.getText().equals(c.getNota(indice).getTitulo())) {
+						|| !titulo.getText().equals(c.getNota(indice).getTitulo())
+						|| prioridad.getSelectedIndex() != c.getNota(indice).getPrioridad()) {
 
 					c.editarArchivo(c.getNota(indice), titulo.getText(), contenido.getText(), ruta,
-							c.getNota(indice).getUrgencia());
+							prioridad.getSelectedIndex());
 
-					GUIListadoNotas notas = new GUIListadoNotas(ruta);
+					GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 					notas.setVisible(true);
 					notas.setResizable(false);
 					notas.setLocationRelativeTo(null);
 					setVisible(false);
 
 				} else if (contenido.getText().equals(c.getNota(indice).getContenido())
-						&& titulo.getText().equals(c.getNota(indice).getTitulo())) {
+						&& titulo.getText().equals(c.getNota(indice).getTitulo())
+						&& prioridad.getSelectedIndex() == c.getNota(indice).getPrioridad()) {
 
 					UIManager.put("OptionPane.background", Color.white);
 					UIManager.put("Panel.background", Color.white);

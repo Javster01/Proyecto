@@ -8,6 +8,13 @@ import javax.swing.plaf.FontUIResource;
 import co.edu.uptc.Control.Control;
 import java.awt.event.*;
 
+/**
+ * Ventana para crear una nueva nota
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 @SuppressWarnings("serial")
 public class GUICrearNota extends JFrame {
 
@@ -16,7 +23,16 @@ public class GUICrearNota extends JFrame {
 	private JTextArea contenido;
 	private JButton volver, guardar;
 
-	public GUICrearNota(String ruta) {
+	/**
+	 * Constructor para crear y configurar el frame principal
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 **/
+
+	public GUICrearNota(String ruta, Control c) {
 
 		// inicializar componentes
 
@@ -39,12 +55,23 @@ public class GUICrearNota extends JFrame {
 
 		// Adicionando componentes
 
-		add(AreaTrabajo(ruta));
+		add(AreaTrabajo(ruta, c));
 
 		setVisible(true);
 	}
 
-	private JPanel AreaTrabajo(String ruta) {
+	/**
+	 * Metodo para crear todos los paneles que hay dentro del frame principal
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 * @return JPanel AreaTrabajo
+	 * 
+	 **/
+
+	private JPanel AreaTrabajo(String ruta, Control c) {
 
 		panelFondo.setBackground(getForeground());
 
@@ -65,7 +92,7 @@ public class GUICrearNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUIListadoNotas notas = new GUIListadoNotas(ruta);
+				GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 				notas.setVisible(true);
 				notas.setResizable(true);
 				notas.setLocationRelativeTo(null);
@@ -132,13 +159,11 @@ public class GUICrearNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Control c = new Control(ruta);
-
 				if (!contenido.getText().isEmpty() && !titulo.getText().isEmpty()) {
 
 					c.agregarNota(titulo.getText(), contenido.getText(), "Notas", 0);
 
-					GUIListadoNotas notas = new GUIListadoNotas(ruta);
+					GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 					notas.setVisible(true);
 					notas.setResizable(false);
 					notas.setLocationRelativeTo(null);
