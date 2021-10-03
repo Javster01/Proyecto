@@ -17,7 +17,6 @@ public class Control {
 
 		ids = new ArrayList<>();
 		listadoNotas = new DAONotas().getNotas(ruta + "/");
-		organizarAlfabeticamente();
 		nombresArchivos = new String[listadoNotas.size()];
 
 	}
@@ -38,10 +37,26 @@ public class Control {
 
 	}
 
+	public void organizarPrioritariamente() {
+
+		Collections.sort(listadoNotas, new Comparator<Nota>() {
+
+			@Override
+			public int compare(Nota o1, Nota o2) {
+
+				Integer nota1 = o1.getUrgencia();
+				Integer nota2 = o2.getUrgencia();
+
+				return nota2.compareTo(nota1);
+			}
+		});
+
+	}
+
 	public String[] getNombresArchivos() {
 
 		for (int i = 0; i < nombresArchivos.length; i++) {
-			
+
 			nombresArchivos[i] = listadoNotas.get(i).getTitulo();
 
 		}
