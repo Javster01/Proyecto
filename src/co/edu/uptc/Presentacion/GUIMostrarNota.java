@@ -15,6 +15,9 @@ public class GUIMostrarNota extends JFrame {
 	private JTextField titulo;
 	private JTextArea contenido;
 	private JButton volver, guardarCambios, agregarContrasena, agregarPrioridad;
+	private JComboBox<String> prioridad;
+	private boolean estado;
+	private String[] prioridades;
 
 	public GUIMostrarNota(int indice, String ruta) {
 
@@ -30,6 +33,13 @@ public class GUIMostrarNota extends JFrame {
 		guardarCambios = new JButton();
 		agregarContrasena = new JButton();
 		agregarPrioridad = new JButton(new ImageIcon("RecursosGUI/orden2.png"));
+		prioridades = new String[4];
+		prioridades[0] = "Ninguna";
+		prioridades[1] = "Alta";
+		prioridades[2] = "Media";
+		prioridades[3] = "Baja";
+		prioridad = new JComboBox<>(prioridades);
+		estado = false;
 
 		// Configuracion del Frame
 
@@ -68,6 +78,14 @@ public class GUIMostrarNota extends JFrame {
 		agregarContrasena.setBackground(Color.WHITE);
 		agregarContrasena.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
 
+		prioridad.setBackground(Color.WHITE);
+		prioridad.setFont(new FontUIResource("Calibri", Font.PLAIN, 15));
+
+		JPanel pComboBox = new JPanel();
+		pComboBox.setBackground(getForeground());
+		pComboBox.add(prioridad);
+		pComboBox.setVisible(false);
+
 		agregarPrioridad.setBackground(Color.WHITE);
 		agregarPrioridad.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
 		agregarPrioridad.addActionListener(new ActionListener() {
@@ -75,11 +93,21 @@ public class GUIMostrarNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUIListadoNotas notas = new GUIListadoNotas(ruta);
-				notas.setVisible(true);
-				notas.setResizable(true);
-				notas.setLocationRelativeTo(null);
-				setVisible(false);
+				if (estado == false) {
+
+					estado = true;
+
+					pComboBox.setVisible(estado);
+					prioridad.getSelectedIndex();
+					System.out.println(prioridad.getSelectedIndex());
+
+				} else if (estado == true) {
+
+					estado = false;
+
+					pComboBox.setVisible(estado);
+
+				}
 			}
 
 		});
@@ -114,6 +142,7 @@ public class GUIMostrarNota extends JFrame {
 		JPanel pContrasena = new JPanel();
 		pContrasena.setBackground(getForeground());
 		pContrasena.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		pContrasena.add(pComboBox);
 		pContrasena.add(agregarPrioridad);
 		pContrasena.add(agregarContrasena);
 
