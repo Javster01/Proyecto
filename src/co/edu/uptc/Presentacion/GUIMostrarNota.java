@@ -15,7 +15,6 @@ public class GUIMostrarNota extends JFrame {
 	private JTextField titulo;
 	private JTextArea contenido;
 	private JButton volver, guardarCambios, agregarContrasena, agregarPrioridad;
-	private JComboBox<String> orden;
 
 	public GUIMostrarNota(int indice, String ruta) {
 
@@ -30,7 +29,7 @@ public class GUIMostrarNota extends JFrame {
 		volver = new JButton();
 		guardarCambios = new JButton();
 		agregarContrasena = new JButton();
-		agregarPrioridad = new JButton(new ImageIcon("RecursosGUI/priorizar.png"));
+		agregarPrioridad = new JButton(new ImageIcon("RecursosGUI/orden2.png"));
 
 		// Configuracion del Frame
 
