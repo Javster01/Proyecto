@@ -8,26 +8,38 @@ import co.edu.uptc.Utilidades.Archivo;
 
 public class DAONotas {
 
-	// titulo, id, fecha, ruta, urgencia, contenido
-
-	// Metodo para agregar notas
+	// titulo, id, fecha, ruta, Prioridad, contenido
 
 	/**
-	 * En el metodo guardarNota se crea un nuevo objeto de tipo archivo el cual se utiliza
-	 * para crear un nuevo archivo .txt con en el metodo agregarContenido de archivo
+	 * Clase para manipular la persistencia
 	 * 
 	 * @author Luis Pinto
-	 * @param Nota String
 	 * 
 	 **/
+
+	/**
+	 * Metodo para crear nuevos archivos
+	 * 
+	 * @param Nota   n
+	 * 
+	 * @param String ruta
+	 * 
+	 **/
+
 	public void guardarNota(Nota n, String ruta) {
 
 		new Archivo().AgregarContenido(ruta, n.getTitulo() + "," + n.getId() + "," + n.getFecha() + "," + n.getRuta()
-				+ "," + n.getUrgencia() + "," + n.getContenido());
+				+ "," + n.getPrioridad() + "," + n.getContenido());
 
 	}
 
-	// Metodo para extraer las notas del txt
+	/**
+	 * Metodo para manipular las notas existentes y extraer el contenido de las
+	 * notas
+	 * 
+	 * @param String ruta
+	 * 
+	 **/
 
 	public ArrayList<Nota> getNotas(String ruta) {
 
@@ -57,7 +69,7 @@ public class DAONotas {
 				n.setId(Integer.parseInt(linea[1]));
 				n.setFecha(linea[2]);
 				n.setRuta(linea[3]);
-				n.setUrgencia(Integer.parseInt(linea[4]));
+				n.setPrioridad(Integer.parseInt(linea[4]));
 				n.setContenido(linea[5].replace(";", "").replace("\\n", "\n").replace("_", ",").replace("-", ";"));
 
 				notas.add(n);
@@ -69,7 +81,14 @@ public class DAONotas {
 		return notas;
 	}
 
-	// Metodo para resetear el archivo para modifcar algo en la nota
+	/**
+	 * Metodo para eliminar archivos
+	 * 
+	 * @param Nota   n
+	 * 
+	 * @param String ruta
+	 * 
+	 **/
 
 	public void eliminarArchivo(Nota n, String ruta) {
 

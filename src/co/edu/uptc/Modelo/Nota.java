@@ -1,16 +1,23 @@
 package co.edu.uptc.Modelo;
 
+/**
+ * Esta clase define los atributos de los objetos de tipo nota
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 public class Nota {
 
 	private String titulo, contenido, fecha, ruta;
-	private int id, urgencia;
+	private int id, Prioridad;
 
-	public int getUrgencia() {
-		return urgencia;
+	public int getPrioridad() {
+		return Prioridad;
 	}
 
-	public void setUrgencia(int urgencia) {
-		this.urgencia = urgencia;
+	public void setPrioridad(int Prioridad) {
+		this.Prioridad = Prioridad;
 	}
 
 	public int getId() {

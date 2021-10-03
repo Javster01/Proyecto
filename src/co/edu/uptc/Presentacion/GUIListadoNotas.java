@@ -9,6 +9,13 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import co.edu.uptc.Control.Control;
 import java.awt.event.*;
 
+/**
+ * Ventana para mostrar todas las notas que existen
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 @SuppressWarnings("serial")
 public class GUIListadoNotas extends JFrame {
 
@@ -17,9 +24,17 @@ public class GUIListadoNotas extends JFrame {
 	private JList<String> listaNotas;
 	private JButton crearNuevaNota, editarNota, borrarNota, volverCarpetas, ordenP, ordenA;
 	private String[] nombresArchivos;
-	private Control c;
 
-	public GUIListadoNotas(String ruta) {
+	/**
+	 * Constructor para crear y configurar el frame principal
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 **/
+
+	public GUIListadoNotas(String ruta, Control c) {
 
 		// inicializar componentes
 
@@ -34,7 +49,6 @@ public class GUIListadoNotas extends JFrame {
 		ordenP = new JButton();
 		ordenA = new JButton();
 		notasPanel = new JPanel();
-		c = new Control(ruta);
 
 		// Configuracion del Frame
 
@@ -47,12 +61,23 @@ public class GUIListadoNotas extends JFrame {
 
 		// Adicionando componentes
 
-		add(AreaTrabajo(ruta));
+		add(AreaTrabajo(ruta, c));
 
 		setVisible(true);
 	}
 
-	private JPanel AreaTrabajo(String ruta) {
+	/**
+	 * Metodo para crear todos los paneles que hay dentro del frame principal
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 * @return JPanel AreaTrabajo
+	 * 
+	 **/
+
+	private JPanel AreaTrabajo(String ruta, Control c) {
 
 		panelFondo.setBackground(Color.WHITE);
 
@@ -73,10 +98,10 @@ public class GUIListadoNotas extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				
 				c.organizarPrioritariamente();
 				nombresArchivos = c.getNombresArchivos();
-				refrescar(ruta);
+				refrescar(ruta, c);
+				c.setOrden(false);
 
 			}
 
@@ -92,7 +117,9 @@ public class GUIListadoNotas extends JFrame {
 
 				c.organizarAlfabeticamente();
 				nombresArchivos = c.getNombresArchivos();
-				refrescar(ruta);
+				refrescar(ruta, c);
+				c.setOrden(true);
+
 			}
 
 		});
@@ -147,7 +174,7 @@ public class GUIListadoNotas extends JFrame {
 
 		listaNotas.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
 		listaNotas.setBorder(new LineBorder(new Color(0, 0, 0, 0), 14));
-		
+
 		nombresArchivos = c.getNombresArchivos();
 		listaNotas.setListData(nombresArchivos);
 
@@ -198,7 +225,7 @@ public class GUIListadoNotas extends JFrame {
 
 					int indice = listaNotas.getSelectedIndex();
 
-					GUIMostrarNota frame = new GUIMostrarNota(indice, ruta);
+					GUIMostrarNota frame = new GUIMostrarNota(indice, ruta, c);
 					frame.setVisible(true);
 					frame.setResizable(true);
 					frame.setLocationRelativeTo(null);
@@ -238,7 +265,7 @@ public class GUIListadoNotas extends JFrame {
 					int indice = listaNotas.getSelectedIndex();
 					c.eliminarNota(c.getNota(indice), ruta);
 
-					refrescar(ruta);
+					refrescar(ruta, c);
 				}
 
 			}
@@ -256,7 +283,7 @@ public class GUIListadoNotas extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUICrearNota frame = new GUICrearNota(ruta);
+				GUICrearNota frame = new GUICrearNota(ruta, c);
 				frame.setVisible(true);
 				frame.setResizable(true);
 				frame.setLocationRelativeTo(null);
@@ -280,13 +307,28 @@ public class GUIListadoNotas extends JFrame {
 
 	}
 
+	/**
+	 * Metodo para remover y volver a pintar los componentes dentro del frame
+	 * principal
+	 * 
+	 **/
+
 	public void actualizarPantalla() {
 
 		getContentPane().removeAll();
 		repaint();
 	}
 
-	private void refrescar(String ruta) {
+	/**
+	 * Metodo para refrescar la ventana de listar las notas
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 **/
+
+	private void refrescar(String ruta, Control c) {
 
 		panelEncabezado = new JPanel();
 		panelFondo = new JPanel();
@@ -301,7 +343,7 @@ public class GUIListadoNotas extends JFrame {
 		notasPanel = new JPanel();
 
 		actualizarPantalla();
-		add(AreaTrabajo(ruta));
+		add(AreaTrabajo(ruta, c));
 		setVisible(false);
 		setVisible(true);
 
