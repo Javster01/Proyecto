@@ -29,7 +29,7 @@ public class GUIMostrarNota extends JFrame {
 		volver = new JButton();
 		guardarCambios = new JButton();
 		agregarContrasena = new JButton();
-		agregarPrioridad = new JButton(new ImageIcon("RecursosGUI/priorizar.png"));
+		agregarPrioridad = new JButton(new ImageIcon("RecursosGUI/orden2.png"));
 
 		// Configuracion del Frame
 
