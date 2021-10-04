@@ -87,6 +87,7 @@ public class GUIListadoNotas extends JFrame {
 		panelEncabezado.setLayout(new BorderLayout());
 
 		labelTituloEncabezado.setText("Notas");
+		labelTituloEncabezado.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 50));
 		panelEncabezado.add(labelTituloEncabezado);
 
 		ordenP.setIcon(new ImageIcon("RecursosGUI/orden2.png"));
