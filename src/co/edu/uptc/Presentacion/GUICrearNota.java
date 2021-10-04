@@ -80,7 +80,7 @@ public class GUICrearNota extends JFrame {
 		panelEncabezado.setBackground(getForeground());
 		panelEncabezado.setLayout(new BorderLayout());
 
-		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
+		titulo.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 30));
 		titulo.setBorder(new LineBorder(Color.BLACK));
 		titulo.setPreferredSize(new DimensionUIResource(300, 30));
 

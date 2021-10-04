@@ -100,7 +100,7 @@ public class GUIMostrarNota extends JFrame {
 		titulo.setPreferredSize(new DimensionUIResource(300, 30));
 		titulo.setText(c.getNota(indice).getTitulo());
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
+		titulo.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 30));
 		titulo.setBorder(new LineBorder(new Color(0, 0, 0, 0), 0));
 
 		agregarContrasena.setIcon(new ImageIcon("RecursosGUI/bloquear.png"));
