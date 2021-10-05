@@ -103,7 +103,7 @@ public class DAONotas {
 
 		for (int i = 0; i < files.length; i++) {
 
-			if (n.getRuta().equalsIgnoreCase(files[i].getPath().toString().replace("\\", "/"))) {
+			if (n.getRuta().equalsIgnoreCase(files[i].getPath().replace("\\", "/"))) {
 
 				File a = files[i];
 
