@@ -32,7 +32,6 @@ public class Control {
 
 		ids = new ArrayList<>();
 		listadoNotas = new DAONotas().getNotas(ruta + "/");
-		nombresArchivos = new String[listadoNotas.size()];
 		organizarAlfabeticamente();
 		orden = true;
 
@@ -94,6 +93,8 @@ public class Control {
 	 **/
 
 	public String[] getNombresArchivos() {
+
+		nombresArchivos = new String[listadoNotas.size()];
 
 		for (int i = 0; i < nombresArchivos.length; i++) {
 
@@ -175,7 +176,7 @@ public class Control {
 		ids.add(id);
 
 		n.setPrioridad(Prioridad);
-		n.setRuta(ruta + "/" + n.getTitulo() + "°¬°" + n.getId() + ".txt");
+		n.setRuta(ruta + "/" + n.getTitulo() + "ï¿½ï¿½ï¿½" + n.getId() + ".txt");
 		n.setFecha(fecha);
 
 		DAONotas notas = new DAONotas();
@@ -228,8 +229,8 @@ public class Control {
 
 			if (lista.get(i).getId() == n.getId()) {
 
-				new DAONotas().eliminarArchivo(n, ruta);
 				lista.remove(n);
+				new DAONotas().eliminarArchivo(n, ruta);
 
 			}
 		}
