@@ -176,7 +176,7 @@ public class Control {
 		ids.add(id);
 
 		n.setPrioridad(Prioridad);
-		n.setRuta(ruta + "/" + n.getTitulo() + "���" + n.getId() + ".txt");
+		n.setRuta(ruta + "/" + n.getTitulo() + "°¬°" + n.getId() + ".txt");
 		n.setFecha(fecha);
 
 		DAONotas notas = new DAONotas();
@@ -229,8 +229,8 @@ public class Control {
 
 			if (lista.get(i).getId() == n.getId()) {
 
-				lista.remove(n);
 				new DAONotas().eliminarArchivo(n, ruta);
+				lista.remove(n);
 
 			}
 		}
