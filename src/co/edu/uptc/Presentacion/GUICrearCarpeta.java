@@ -16,7 +16,7 @@ import java.awt.event.*;
  **/
 
 @SuppressWarnings("serial")
-public class GUICrearNota extends JFrame {
+public class GUICrearCarpeta extends JFrame {
 
 	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro;
 	private JTextField titulo;
@@ -32,7 +32,7 @@ public class GUICrearNota extends JFrame {
 	 * 
 	 **/
 
-	public GUICrearNota(String ruta, Control c) {
+	public GUICrearCarpeta(String ruta, Control c) {
 
 		// inicializar componentes
 
@@ -161,7 +161,7 @@ public class GUICrearNota extends JFrame {
 
 				if (!contenido.getText().isEmpty() && !titulo.getText().isEmpty()) {
 
-					c.agregarNota(titulo.getText(), contenido.getText(), ruta, 0);
+					c.agregarNota(titulo.getText(), contenido.getText(), "Notas", 0);
 
 					GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 					notas.setVisible(true);

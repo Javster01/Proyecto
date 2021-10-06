@@ -1,62 +1,89 @@
 package co.edu.uptc.Persistencia;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
-
-import co.edu.uptc.Modelo.Nota;
-import co.edu.uptc.Utilidades.Archivo;
+import co.edu.uptc.Modelo.Carpeta;
 
 public class DAOCarpeta {
+
+	/**
+	 * Metodo para crear carpetas
+	 * 
+	 * @param String Nombre
+	 * 
+	 **/
+
 	public void crearDirectorio(String Nombre) {
 
-		File file = new File(Nombre);
+		File file = new File("Carpetas/" + Nombre);
+
 		try {
+
 			file.mkdir();
+
 		} catch (Exception e) {
+
 			e.printStackTrace();
 			System.err.println("No se pudo crear el archivo");
 		}
 	}
 
-	public ArrayList<Nota> getNotas(String ruta) {
+	/**
+	 * Metodo para ver las carpetas existentes
+	 * 
+	 * @param Carpeta c
+	 * 
+	 * @param String  ruta
+	 * 
+	 **/
 
-		ArrayList<String> datos = new ArrayList<>();
-		ArrayList<Nota> notas = new ArrayList<Nota>();
+	public ArrayList<Carpeta> getCarpetas(String ruta) {
+
+		ArrayList<Carpeta> carpetas = new ArrayList<>();
 
 		File dir = new File(ruta);
 
-		File[] files = dir.listFiles(new FilenameFilter() {
-
-			public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".txt");
-			}
-		});
+		File[] files = dir.listFiles();
 
 		for (int i = 0; i < files.length; i++) {
 
-			datos = new Archivo().ContenidoArchivo((files[i].getPath()));
+			Carpeta c = new Carpeta();
 
-			for (int j = 0; j < datos.size(); j++) {
+			String linea[] = files[i].getPath().split("\\\\");
 
-				Nota n = new Nota();
+			c.setNombre(linea[1]);
+			carpetas.add(c);
+		}
 
-				String linea[] = datos.get(j).split(",");
+		return carpetas;
+	}
 
-				n.setTitulo(linea[0].replace("_", ",").replace("-", ";"));
-				n.setId(Integer.parseInt(linea[1]));
-				n.setFecha(linea[2]);
-				n.setRuta(linea[3]);
-				n.setPrioridad(Integer.parseInt(linea[4]));
-				n.setContenido(linea[5].replace(";", "").replace("\\n", "\n").replace("_", ",").replace("-", ";"));
+	/**
+	 * Metodo para eliminar carpetas
+	 * 
+	 * @param Carpeta c
+	 * 
+	 * @param String  ruta
+	 * 
+	 **/
 
-				notas.add(n);
+	public void eliminarCarpeta(Carpeta c, String ruta) {
+
+		File dir = new File(ruta);
+
+		File[] files = dir.listFiles();
+
+		for (int i = 0; i < files.length; i++) {
+
+			if (c.getNombre().equalsIgnoreCase(files[i].getName())) {
+
+				File a = files[i];
+
+				a.delete();
 
 			}
 
 		}
-
-		return notas;
 	}
 
 }

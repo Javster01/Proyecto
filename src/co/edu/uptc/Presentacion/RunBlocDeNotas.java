@@ -1,7 +1,5 @@
 package co.edu.uptc.Presentacion;
 
-import co.edu.uptc.Control.Control;
-
 /**
  * Programa con estilo app de celular para gestion de notas
  * 
@@ -17,9 +15,7 @@ public class RunBlocDeNotas {
 
 	public static void main(String[] args) {
 
-		Control c = new Control("Notas");
-
-		GUIListadoNotas guiPrincipal = new GUIListadoNotas("Notas", c);
+		GUIListadoCarpetas guiPrincipal = new GUIListadoCarpetas();
 
 		guiPrincipal.setLocationRelativeTo(null);
 

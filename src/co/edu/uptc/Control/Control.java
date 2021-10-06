@@ -17,12 +17,14 @@ import co.edu.uptc.Persistencia.*;
 public class Control {
 
 	private ArrayList<Nota> listadoNotas;
+	private ArrayList<Carpeta> listaCarpetas;
 	private ArrayList<Integer> ids;
 	private String[] nombresArchivos;
+	private String[] nombresCarpetas;
 	private boolean orden;
 
 	/**
-	 * Constructor para crear y configurar el frame principal
+	 * Constructor para crear controles
 	 * 
 	 * @param String ruta
 	 * 
@@ -32,6 +34,7 @@ public class Control {
 
 		ids = new ArrayList<>();
 		listadoNotas = new DAONotas().getNotas(ruta + "/");
+		listaCarpetas = new DAOCarpeta().getCarpetas(ruta);
 		organizarAlfabeticamente();
 		orden = true;
 
@@ -103,6 +106,26 @@ public class Control {
 		}
 
 		return nombresArchivos;
+	}
+
+	/**
+	 * Metodo para traer el nombre de todas las carpetas
+	 * 
+	 * @return String nombresArchivos
+	 * 
+	 **/
+
+	public String[] getNombresCarpetas() {
+
+		nombresCarpetas = new String[listaCarpetas.size()];
+
+		for (int i = 0; i < nombresCarpetas.length; i++) {
+
+			nombresCarpetas[i] = listaCarpetas.get(i).getNombre();
+
+		}
+
+		return nombresCarpetas;
 	}
 
 	public ArrayList<Nota> getListadoNotas() {
@@ -186,6 +209,33 @@ public class Control {
 		listadoNotas = notas.getNotas(ruta);
 
 	}
+	
+	/**
+	 * Metodo para crear crear una nota
+	 * 
+	 * @param String titulo
+	 * 
+	 * @param String contenido
+	 * 
+	 * @param String ruta
+	 * 
+	 * @param int    Prioridad
+	 * 
+	 **/
+
+	public void agregarCarpeta(String nombre, String ruta) {
+
+		Carpeta c = new Carpeta();
+
+		c.setNombre(nombre);
+
+		DAOCarpeta carpetas = new DAOCarpeta();
+
+		carpetas.crearDirectorio(nombre);
+
+		listaCarpetas = carpetas.getCarpetas(ruta);
+
+	}
 
 	/**
 	 * Metodo para traer una nota del arreglo de las notas segun el indice
@@ -213,6 +263,31 @@ public class Control {
 	}
 
 	/**
+	 * Metodo para traer una carpeta del arreglo de las carpetas segun el indice
+	 * 
+	 * @param int indice
+	 * 
+	 * @return Carpeta carpeta
+	 * 
+	 **/
+
+	public Carpeta getCarpeta(int indice) {
+
+		Carpeta carpeta = new Carpeta();
+
+		if (listaCarpetas.get(indice) != null) {
+
+			carpeta = listaCarpetas.get(indice);
+
+		} else {
+
+			carpeta = null;
+		}
+
+		return carpeta;
+	}
+
+	/**
 	 * Metodo para eliminar una nota
 	 * 
 	 * @param Nota   n
@@ -236,6 +311,33 @@ public class Control {
 		}
 
 		listadoNotas = lista;
+
+	}
+
+	/**
+	 * Metodo para eliminar una carpeta
+	 * 
+	 * @param Carpeta c
+	 * 
+	 * @param String  ruta
+	 * 
+	 **/
+
+	public void eliminarCarpeta(Carpeta c, String ruta) {
+
+		ArrayList<Carpeta> lista = listaCarpetas;
+
+		for (int i = 0; i < lista.size(); i++) {
+
+			if (lista.get(i).getNombre().equals(c.getNombre())) {
+
+				new DAOCarpeta().eliminarCarpeta(c, ruta);
+				lista.remove(c);
+
+			}
+		}
+
+		listaCarpetas = lista;
 
 	}
 
@@ -275,9 +377,9 @@ public class Control {
 		}
 
 	}
-	
+
 	public void contrasena() {
-		
+
 	}
 
 }

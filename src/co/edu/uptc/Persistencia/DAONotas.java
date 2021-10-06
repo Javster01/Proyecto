@@ -8,8 +8,6 @@ import co.edu.uptc.Utilidades.Archivo;
 
 public class DAONotas {
 
-	// titulo, id, fecha, ruta, Prioridad, contenido
-
 	/**
 	 * Clase para manipular la persistencia
 	 * 

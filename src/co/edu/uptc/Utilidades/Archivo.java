@@ -78,27 +78,5 @@ public class Archivo {
 
 	}
 
-	/**
-	 * Metodo para crear carpetas
-	 * 
-	 * @param String ruta
-	 * 
-	 **/
-
-	public void crearDirectorio(String Ruta) {
-
-		File file = new File(Ruta);
-
-		try {
-
-			file.mkdir();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
-			System.err.println("No se pudo crear el archivo");
-		}
-	}
-
 }
+
