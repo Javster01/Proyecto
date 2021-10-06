@@ -81,7 +81,7 @@ public class GUIListadoNotas extends JFrame {
 
 		panelFondo.setBackground(Color.WHITE);
 
-		// panel del ecabezado
+		// panel del encabezado
 
 		panelEncabezado.setBackground(Color.WHITE);
 		panelEncabezado.setLayout(new BorderLayout());

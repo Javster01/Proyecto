@@ -176,7 +176,7 @@ public class Control {
 		ids.add(id);
 
 		n.setPrioridad(Prioridad);
-		n.setRuta(ruta + "/" + n.getTitulo() + "°¬°" + n.getId() + ".txt");
+		n.setRuta(ruta + "/" + n.getTitulo() + "'" + n.getId() + ".txt");
 		n.setFecha(fecha);
 
 		DAONotas notas = new DAONotas();
@@ -274,6 +274,10 @@ public class Control {
 
 		}
 
+	}
+	
+	public void contrasena() {
+		
 	}
 
 }

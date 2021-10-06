@@ -1,4 +1,4 @@
-package co.edu.uptc.Presentacion;
+ package co.edu.uptc.Presentacion;
 
 import java.awt.*;
 import javax.swing.*;
@@ -106,6 +106,16 @@ public class GUIMostrarNota extends JFrame {
 		agregarContrasena.setIcon(new ImageIcon("RecursosGUI/bloquear.png"));
 		agregarContrasena.setBackground(Color.WHITE);
 		agregarContrasena.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		agregarContrasena.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUIContrasena gc = new GUIContrasena();
+                gc.setVisible(true);
+                //dispose();
+
+			}
+		});
 
 		prioridad.setBackground(Color.WHITE);
 		prioridad.setFont(new FontUIResource("Calibri", Font.PLAIN, 15));
