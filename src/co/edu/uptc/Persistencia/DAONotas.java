@@ -24,6 +24,8 @@ public class DAONotas {
 	 * 
 	 **/
 
+	private File files[];
+
 	public void guardarNota(Nota n, String ruta) {
 
 		new Archivo().AgregarContenido(ruta, n.getTitulo() + "," + n.getId() + "," + n.getFecha() + "," + n.getRuta()
@@ -46,7 +48,9 @@ public class DAONotas {
 
 		File dir = new File(ruta);
 
-		File[] files = dir.listFiles(new FilenameFilter() {
+		files = new File[(int) dir.length()];
+
+		files = dir.listFiles(new FilenameFilter() {
 
 			public boolean accept(File dir, String name) {
 				return name.toLowerCase().endsWith(".txt");

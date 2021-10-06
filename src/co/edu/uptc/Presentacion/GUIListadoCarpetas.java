@@ -30,10 +30,6 @@ public class GUIListadoCarpetas extends JFrame {
 	/**
 	 * Constructor para crear y configurar el frame principal
 	 * 
-	 * @param String  ruta
-	 * 
-	 * @param Control c
-	 * 
 	 **/
 
 	public GUIListadoCarpetas() {
@@ -283,6 +279,7 @@ public class GUIListadoCarpetas extends JFrame {
 		crearNuevaCarpeta = new JButton();
 		borrarCarpeta = new JButton();
 		carpetasPanel = new JPanel();
+		c = new Control(ruta);
 
 		actualizarPantalla();
 		add(AreaTrabajo(ruta, c));
