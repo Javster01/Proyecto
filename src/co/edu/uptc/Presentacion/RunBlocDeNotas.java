@@ -24,6 +24,7 @@ public class RunBlocDeNotas {
 		guiPrincipal.setLocationRelativeTo(null);
 		
 		//holi
+		
 
 	}
 

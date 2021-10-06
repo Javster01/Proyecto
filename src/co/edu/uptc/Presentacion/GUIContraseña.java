@@ -11,7 +11,7 @@ public class GUIContraseña extends JFrame implements ActionListener {
 	private JPanel panelFondo;
 	private JPasswordField contraseña;
 	private JButton guardarContraseña;
-	private JTextField texto;
+	//private JTextField texto;
 
 	public GUIContraseña() {
 
@@ -27,7 +27,7 @@ public class GUIContraseña extends JFrame implements ActionListener {
 		colocarPaneles();
 		colocarEtiqueta();
 		colocarBotones();
-		//texto();
+		// texto();
 
 	}
 
@@ -37,15 +37,6 @@ public class GUIContraseña extends JFrame implements ActionListener {
 		panelFondo.setBackground(Color.WHITE);
 		this.getContentPane().add(panelFondo);
 	}
-
-	/*private void texto() {
-
-		texto = new JTextField();
-		texto.setText("Ingrese una contraseña");
-		texto.setBounds(116, 25, 115, 26);
-		panelFondo.add(texto);
-
-	}*/
 
 	private void colocarEtiqueta() {
 		contraseña = new JPasswordField();
