@@ -4,6 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import co.edu.uptc.Modelo.Carpeta;
 
+/**
+ * Clase para manipular la persistencia de las carpetas
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 public class DAOCarpeta {
 
 	/**

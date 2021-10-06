@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import co.edu.uptc.Modelo.*;
 import co.edu.uptc.Utilidades.Archivo;
 
-public class DAONotas {
+/**
+ * Clase para manipular la persistencia de las notas
+ * 
+ * @author Luis Pinto
+ * 
+ **/
 
-	/**
-	 * Clase para manipular la persistencia
-	 * 
-	 * @author Luis Pinto
-	 * 
-	 **/
+public class DAONotas {
 
 	/**
 	 * Metodo para crear nuevos archivos
