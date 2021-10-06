@@ -9,7 +9,7 @@ import co.edu.uptc.Control.Control;
 import java.awt.event.*;
 
 /**
- * Ventana para crear una nueva nota
+ * Ventana para crear una nueva carpeta
  * 
  * @author Luis Pinto
  * 
