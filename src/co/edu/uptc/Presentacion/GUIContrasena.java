@@ -6,12 +6,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class GUIContrasena extends JFrame implements ActionListener {
 
 	private JPanel panelFondo;
 	private JPasswordField contrasena;
 	private JButton guardarContrasena;
-	//private JTextField texto;
+	// private JTextField texto;
 
 	public GUIContrasena() {
 

@@ -22,9 +22,6 @@ public class RunBlocDeNotas {
 		GUIListadoNotas guiPrincipal = new GUIListadoNotas("Notas", c);
 
 		guiPrincipal.setLocationRelativeTo(null);
-		
-		//holiwiwi
-		
 
 	}
 
