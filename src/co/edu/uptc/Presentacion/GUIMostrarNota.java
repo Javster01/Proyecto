@@ -1,4 +1,4 @@
- package co.edu.uptc.Presentacion;
+package co.edu.uptc.Presentacion;
 
 import java.awt.*;
 import javax.swing.*;
