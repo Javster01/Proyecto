@@ -39,10 +39,24 @@ public class Control {
 		orden = true;
 
 	}
+	
+	/**
+	 * Metodo para obtener si el orden alfabetico esta puesto si es true
+	 * 
+	 * @return boolean orden
+	 * 
+	 **/
 
 	public boolean getOrden() {
 		return orden;
 	}
+	
+	/**
+	 * Metodo para declarar el tipo de orden segun ture o false
+	 * 
+	 * @param boolean orden
+	 * 
+	 **/
 
 	public void setOrden(boolean orden) {
 		this.orden = orden;
