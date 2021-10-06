@@ -227,13 +227,9 @@ public class Control {
 	/**
 	 * Metodo para crear crear una nota
 	 * 
-	 * @param String titulo
-	 * 
-	 * @param String contenido
+	 * @param String nombre
 	 * 
 	 * @param String ruta
-	 * 
-	 * @param int    Prioridad
 	 * 
 	 **/
 
