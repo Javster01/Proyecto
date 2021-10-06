@@ -24,7 +24,7 @@ public class DAONotas {
 	 * 
 	 **/
 
-	private File files[];
+	private ArrayList<File> archivos;
 
 	public void guardarNota(Nota n, String ruta) {
 
@@ -33,6 +33,28 @@ public class DAONotas {
 
 	}
 
+	/**
+	 * Metodo para recorrer los archivos dentro de una carpeta
+	 * 
+	 * @param File folder ruta
+	 * 
+	 **/
+	
+	public void findAllFilesInFolder(File folder) {
+		
+		for (File file : folder.listFiles()) {
+			
+			if (file.isFile()) {
+				
+				archivos.add(file);
+				
+			} else {
+				
+				findAllFilesInFolder(file);
+			}
+		}
+	}
+	
 	/**
 	 * Metodo para manipular las notas existentes y extraer el contenido de las
 	 * notas
@@ -45,21 +67,15 @@ public class DAONotas {
 
 		ArrayList<String> datos = new ArrayList<>();
 		ArrayList<Nota> notas = new ArrayList<Nota>();
+		archivos = new ArrayList<>();
 
 		File dir = new File(ruta);
+		
+		findAllFilesInFolder(dir);
 
-		files = new File[(int) dir.length()];
+		for (int i = 0; i < archivos.size(); i++) {
 
-		files = dir.listFiles(new FilenameFilter() {
-
-			public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".txt");
-			}
-		});
-
-		for (int i = 0; i < files.length; i++) {
-
-			datos = new Archivo().ContenidoArchivo((files[i].getPath()));
+			datos = new Archivo().ContenidoArchivo((archivos.get(i).getPath()));
 
 			for (int j = 0; j < datos.size(); j++) {
 
