@@ -9,29 +9,46 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import co.edu.uptc.Control.Control;
 import java.awt.event.*;
 
+/**
+ * Ventana para mostrar todas las notas que existen
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 @SuppressWarnings("serial")
 public class GUIListadoNotas extends JFrame {
 
-	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro;
-	private JPanel notasPanel;
+	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro, notasPanel;
 	private JLabel labelTituloEncabezado;
 	private JList<String> listaNotas;
-	private JButton crearNuevaNota, editarNota, borrarNota;
-	private String ruta;
-//	private JButton verNota;
+	private JButton crearNuevaNota, editarNota, borrarNota, volverCarpetas, ordenP, ordenA;
+	private String[] nombresArchivos;
 
-	public GUIListadoNotas(String ruta) {
+	/**
+	 * Constructor para crear y configurar el frame principal
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 **/
+
+	public GUIListadoNotas(String ruta, Control c) {
 
 		// inicializar componentes
 
+		panelEncabezado = new JPanel();
 		panelFondo = new JPanel();
 		labelTituloEncabezado = new JLabel();
 		listaNotas = new JList<String>();
 		editarNota = new JButton();
 		crearNuevaNota = new JButton();
 		borrarNota = new JButton();
+		volverCarpetas = new JButton();
+		ordenP = new JButton();
+		ordenA = new JButton();
 		notasPanel = new JPanel();
-		this.ruta = ruta;
 
 		// Configuracion del Frame
 
@@ -44,23 +61,106 @@ public class GUIListadoNotas extends JFrame {
 
 		// Adicionando componentes
 
-		add(AreaTrabajo(ruta));
+		add(AreaTrabajo(ruta, c));
 
 		setVisible(true);
 	}
 
-	private JPanel AreaTrabajo(String ruta) {
+	/**
+	 * Metodo para crear todos los paneles que hay dentro del frame principal
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 * @return JPanel AreaTrabajo
+	 * 
+	 **/
+
+	private JPanel AreaTrabajo(String ruta, Control c) {
 
 		panelFondo.setBackground(Color.WHITE);
 
 		// panel del ecabezado
 
-		panelEncabezado = new JPanel();
 		panelEncabezado.setBackground(Color.WHITE);
+		panelEncabezado.setLayout(new BorderLayout());
 
 		labelTituloEncabezado.setText("Notas");
-		labelTituloEncabezado.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 50));
+		labelTituloEncabezado.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 50));
 		panelEncabezado.add(labelTituloEncabezado);
+
+		ordenP.setIcon(new ImageIcon("RecursosGUI/orden2.png"));
+		ordenP.setBackground(Color.WHITE);
+		ordenP.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		ordenP.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				c.organizarPrioritariamente();
+				nombresArchivos = c.getNombresArchivos();
+				refrescar(ruta, c);
+				c.setOrden(false);
+
+			}
+
+		});
+
+		ordenA.setIcon(new ImageIcon("RecursosGUI/orden1.png"));
+		ordenA.setBackground(Color.WHITE);
+		ordenA.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		ordenA.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				c.organizarAlfabeticamente();
+				nombresArchivos = c.getNombresArchivos();
+				refrescar(ruta, c);
+				c.setOrden(true);
+
+			}
+
+		});
+
+		volverCarpetas.setIcon(new ImageIcon("RecursosGUI/flecha.png"));
+		volverCarpetas.setBackground(Color.WHITE);
+		volverCarpetas.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		volverCarpetas.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+
+		});
+
+		JPanel pVT = new JPanel();
+		pVT.setLayout(new BorderLayout());
+		pVT.setBackground(Color.WHITE);
+
+		JPanel pVolverCarpeta = new JPanel();
+		pVolverCarpeta.setBackground(Color.WHITE);
+		pVolverCarpeta.setLayout(new FlowLayout(FlowLayout.LEFT));
+		pVolverCarpeta.add(volverCarpetas);
+
+		JPanel pOrdenar = new JPanel();
+		pOrdenar.setBackground(Color.WHITE);
+		pOrdenar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		pOrdenar.add(ordenA);
+		pOrdenar.add(ordenP);
+
+		JPanel pTituto = new JPanel();
+		pTituto.setBackground(Color.WHITE);
+		pTituto.setLayout(new FlowLayout(FlowLayout.CENTER));
+		pTituto.add(labelTituloEncabezado);
+
+		pVT.add(pVolverCarpeta, BorderLayout.WEST);
+		pVT.add(pOrdenar, BorderLayout.EAST);
+		pVT.add(pTituto, BorderLayout.SOUTH);
+
+		panelEncabezado.add(pVT, BorderLayout.CENTER);
 
 		// panel del centro
 
@@ -68,15 +168,19 @@ public class GUIListadoNotas extends JFrame {
 		panelCentro.setBackground(Color.WHITE);
 		panelCentro.setBorder(new LineBorder(new Color(0, 0, 0, 0), 20));
 
-		notasPanel.setPreferredSize(new DimensionUIResource(300, 320));
+		notasPanel.setPreferredSize(new DimensionUIResource(280, 305));
 		notasPanel.setBackground(Color.WHITE);
 		notasPanel.setBorder(new LineBorder(Color.BLACK));
 
-		Control c = new Control(ruta);
-
 		listaNotas.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
 		listaNotas.setBorder(new LineBorder(new Color(0, 0, 0, 0), 14));
-		listaNotas.setListData(c.getNombresArchivos());
+
+		nombresArchivos = c.getNombresArchivos();
+		listaNotas.setListData(nombresArchivos);
+
+		DefaultListCellRenderer cellRenderer = (DefaultListCellRenderer) listaNotas.getCellRenderer();
+		cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		listaNotas.setBorder(new LineBorder(Color.WHITE));
 		listaNotas.setVisibleRowCount(10);
 
 		notasPanel.add(listaNotas);
@@ -119,7 +223,9 @@ public class GUIListadoNotas extends JFrame {
 
 				if (listaNotas.getSelectedValue() != null) {
 
-					GUIMostrarNota frame = new GUIMostrarNota(listaNotas.getSelectedValue(), ruta);
+					int indice = listaNotas.getSelectedIndex();
+
+					GUIMostrarNota frame = new GUIMostrarNota(indice, ruta, c);
 					frame.setVisible(true);
 					frame.setResizable(true);
 					frame.setLocationRelativeTo(null);
@@ -128,7 +234,11 @@ public class GUIListadoNotas extends JFrame {
 
 				} else if (listaNotas.getSelectedValue() == null) {
 
-					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para ver");
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para eliminar", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
@@ -142,10 +252,21 @@ public class GUIListadoNotas extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Control c = new Control(ruta);
-				c.eliminarNota(c.buscarNota(listaNotas.getSelectedValue()), ruta);
+				if (listaNotas.getSelectedValue() == null) {
 
-				refrescar();
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para eliminar", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
+
+				} else {
+
+					int indice = listaNotas.getSelectedIndex();
+					c.eliminarNota(c.getNota(indice), ruta);
+
+					refrescar(ruta, c);
+				}
 
 			}
 		});
@@ -162,7 +283,7 @@ public class GUIListadoNotas extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUICrearNota frame = new GUICrearNota(ruta);
+				GUICrearNota frame = new GUICrearNota(ruta, c);
 				frame.setVisible(true);
 				frame.setResizable(true);
 				frame.setLocationRelativeTo(null);
@@ -186,24 +307,43 @@ public class GUIListadoNotas extends JFrame {
 
 	}
 
+	/**
+	 * Metodo para remover y volver a pintar los componentes dentro del frame
+	 * principal
+	 * 
+	 **/
+
 	public void actualizarPantalla() {
 
 		getContentPane().removeAll();
 		repaint();
 	}
 
-	private void refrescar() {
+	/**
+	 * Metodo para refrescar la ventana de listar las notas
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 **/
 
+	private void refrescar(String ruta, Control c) {
+
+		panelEncabezado = new JPanel();
 		panelFondo = new JPanel();
 		labelTituloEncabezado = new JLabel();
 		listaNotas = new JList<String>();
 		editarNota = new JButton();
 		crearNuevaNota = new JButton();
 		borrarNota = new JButton();
+		volverCarpetas = new JButton();
+		ordenP = new JButton();
+		ordenA = new JButton();
 		notasPanel = new JPanel();
 
 		actualizarPantalla();
-		add(AreaTrabajo(ruta));
+		add(AreaTrabajo(ruta, c));
 		setVisible(false);
 		setVisible(true);
 

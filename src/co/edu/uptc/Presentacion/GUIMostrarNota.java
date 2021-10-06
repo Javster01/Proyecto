@@ -8,15 +8,36 @@ import javax.swing.plaf.FontUIResource;
 import co.edu.uptc.Control.Control;
 import java.awt.event.*;
 
+/**
+ * Ventana para mostrar el contenido de una nota
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 @SuppressWarnings("serial")
 public class GUIMostrarNota extends JFrame {
 
 	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro;
 	private JTextField titulo;
 	private JTextArea contenido;
-	private JButton volver, guardarCambios, agregarContraseña;
+	private JButton volver, guardarCambios, agregarContrasena, agregarPrioridad;
+	private JComboBox<String> prioridad;
+	private boolean estado;
+	private String[] prioridades;
 
-	public GUIMostrarNota(String nombreNota, String ruta) {
+	/**
+	 * Constructor para crear y configurar el frame principal
+	 * 
+	 * @param int     indice
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 **/
+
+	public GUIMostrarNota(int indice, String ruta, Control c) {
 
 		// inicializar componentes
 
@@ -28,7 +49,15 @@ public class GUIMostrarNota extends JFrame {
 		contenido = new JTextArea();
 		volver = new JButton();
 		guardarCambios = new JButton();
-		agregarContraseña = new JButton();
+		agregarContrasena = new JButton();
+		agregarPrioridad = new JButton(new ImageIcon("RecursosGUI/orden2.png"));
+		prioridades = new String[4];
+		prioridades[0] = "Ninguna";
+		prioridades[1] = "Baja";
+		prioridades[2] = "Media";
+		prioridades[3] = "Alta";
+		prioridad = new JComboBox<>(prioridades);
+		estado = false;
 
 		// Configuracion del Frame
 
@@ -36,17 +65,30 @@ public class GUIMostrarNota extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(im.getImage());
 		setSize(360, 630);
-		setTitle(nombreNota);
+		setTitle(c.getNota(indice).getTitulo());
 		getContentPane().setBackground(Color.WHITE);
 
 		// Adicionando componentes
 
-		add(AreaTrabajo(nombreNota, ruta));
+		add(areaTrabajo(indice, ruta, c));
 
 		setVisible(true);
 	}
 
-	private JPanel AreaTrabajo(String nombreNota, String ruta) {
+	/**
+	 * Metodo para crear todos los paneles que hay dentro del frame principal
+	 * 
+	 * @param int     indice
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 * @return JPanel AreaTrabajo
+	 * 
+	 **/
+
+	private JPanel areaTrabajo(int indice, String ruta, Control c) {
 
 		panelFondo.setBackground(getForeground());
 
@@ -55,13 +97,48 @@ public class GUIMostrarNota extends JFrame {
 		panelEncabezado.setBackground(getForeground());
 		panelEncabezado.setLayout(new BorderLayout());
 
-		titulo.setText(nombreNota);
-		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
+		titulo.setPreferredSize(new DimensionUIResource(300, 30));
+		titulo.setText(c.getNota(indice).getTitulo());
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		titulo.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 30));
 		titulo.setBorder(new LineBorder(new Color(0, 0, 0, 0), 0));
 
-		agregarContraseña.setIcon(new ImageIcon("RecursosGUI/contrasena.png"));
-		agregarContraseña.setBackground(Color.WHITE);
-		agregarContraseña.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		agregarContrasena.setIcon(new ImageIcon("RecursosGUI/bloquear.png"));
+		agregarContrasena.setBackground(Color.WHITE);
+		agregarContrasena.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+
+		prioridad.setBackground(Color.WHITE);
+		prioridad.setFont(new FontUIResource("Calibri", Font.PLAIN, 15));
+
+		JPanel pComboBox = new JPanel();
+		pComboBox.setBackground(getForeground());
+		pComboBox.add(prioridad);
+		pComboBox.setVisible(false);
+
+		agregarPrioridad.setBackground(Color.WHITE);
+		agregarPrioridad.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		agregarPrioridad.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (estado == false) {
+
+					estado = true;
+
+					pComboBox.setVisible(estado);
+					prioridad.setSelectedIndex(c.getNota(indice).getPrioridad());
+
+				} else if (estado == true) {
+
+					estado = false;
+
+					pComboBox.setVisible(estado);
+				}
+			}
+		}
+
+		);
 
 		volver.setIcon(new ImageIcon("RecursosGUI/flecha.png"));
 		volver.setBackground(Color.WHITE);
@@ -71,7 +148,7 @@ public class GUIMostrarNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUIListadoNotas notas = new GUIListadoNotas(ruta);
+				GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 				notas.setVisible(true);
 				notas.setResizable(true);
 				notas.setLocationRelativeTo(null);
@@ -90,10 +167,12 @@ public class GUIMostrarNota extends JFrame {
 		pVolver.setLayout(new FlowLayout(FlowLayout.LEFT));
 		pVolver.add(volver);
 
-		JPanel pContraseña = new JPanel();
-		pContraseña.setBackground(getForeground());
-		pContraseña.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		pContraseña.add(agregarContraseña);
+		JPanel pContrasena = new JPanel();
+		pContrasena.setBackground(getForeground());
+		pContrasena.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		pContrasena.add(pComboBox);
+		pContrasena.add(agregarPrioridad);
+		pContrasena.add(agregarContrasena);
 
 		JPanel pTituto = new JPanel();
 		pTituto.setBackground(getForeground());
@@ -101,7 +180,7 @@ public class GUIMostrarNota extends JFrame {
 		pTituto.add(titulo);
 
 		pVT.add(pVolver, BorderLayout.WEST);
-		pVT.add(pContraseña, BorderLayout.EAST);
+		pVT.add(pContrasena, BorderLayout.EAST);
 		pVT.add(pTituto, BorderLayout.SOUTH);
 
 		panelEncabezado.add(pVT, BorderLayout.CENTER);
@@ -116,12 +195,10 @@ public class GUIMostrarNota extends JFrame {
 		notasPanel.setBackground(getForeground());
 		notasPanel.setBorder(new LineBorder(Color.BLACK));
 
-		Control c = new Control(ruta);
-
 		contenido.setPreferredSize(new DimensionUIResource(285, 305));
 		contenido.setLineWrap(true);
 		contenido.setWrapStyleWord(true);
-		contenido.setText(c.buscarNota(nombreNota).getContenido());
+		contenido.setText(c.getNota(indice).getContenido());
 
 		contenido.setFont(new FontUIResource("Calibri", Font.PLAIN, 20));
 
@@ -147,21 +224,36 @@ public class GUIMostrarNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (!contenido.getText().equals(c.buscarNota(nombreNota).getContenido())
-						|| !titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
+				if (!contenido.getText().equals(c.getNota(indice).getContenido())
+						|| !titulo.getText().equals(c.getNota(indice).getTitulo())
+						|| prioridad.getSelectedIndex() != c.getNota(indice).getPrioridad()) {
 
-					c.editarArchivo(c.buscarNota(nombreNota), ruta);
+					c.editarArchivo(c.getNota(indice), titulo.getText(), contenido.getText(), ruta,
+							prioridad.getSelectedIndex());
 
-					GUIListadoNotas notas = new GUIListadoNotas(ruta);
+					GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 					notas.setVisible(true);
 					notas.setResizable(false);
 					notas.setLocationRelativeTo(null);
 					setVisible(false);
 
-				} else if (contenido.getText().equals(c.buscarNota(nombreNota).getContenido())
-						&& titulo.getText().equals(c.buscarNota(nombreNota).getTitulo())) {
+				} else if (contenido.getText().equals(c.getNota(indice).getContenido())
+						&& titulo.getText().equals(c.getNota(indice).getTitulo())
+						&& prioridad.getSelectedIndex() == c.getNota(indice).getPrioridad()) {
 
-					JOptionPane.showMessageDialog(null, "No se han hecho cambios en al nota");
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "No se ha realizado ningun cambio", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
+
+				} else if (titulo.getText().isEmpty() || titulo.getText().isEmpty()) {
+
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "Este titulo no puede estar vacio", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});

@@ -8,6 +8,13 @@ import javax.swing.plaf.FontUIResource;
 import co.edu.uptc.Control.Control;
 import java.awt.event.*;
 
+/**
+ * Ventana para crear una nueva nota
+ * 
+ * @author Luis Pinto
+ * 
+ **/
+
 @SuppressWarnings("serial")
 public class GUICrearNota extends JFrame {
 
@@ -16,7 +23,16 @@ public class GUICrearNota extends JFrame {
 	private JTextArea contenido;
 	private JButton volver, guardar;
 
-	public GUICrearNota(String ruta) {
+	/**
+	 * Constructor para crear y configurar el frame principal
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 **/
+
+	public GUICrearNota(String ruta, Control c) {
 
 		// inicializar componentes
 
@@ -39,12 +55,23 @@ public class GUICrearNota extends JFrame {
 
 		// Adicionando componentes
 
-		add(AreaTrabajo(ruta));
+		add(AreaTrabajo(ruta, c));
 
 		setVisible(true);
 	}
 
-	private JPanel AreaTrabajo(String ruta) {
+	/**
+	 * Metodo para crear todos los paneles que hay dentro del frame principal
+	 * 
+	 * @param String  ruta
+	 * 
+	 * @param Control c
+	 * 
+	 * @return JPanel AreaTrabajo
+	 * 
+	 **/
+
+	private JPanel AreaTrabajo(String ruta, Control c) {
 
 		panelFondo.setBackground(getForeground());
 
@@ -52,8 +79,8 @@ public class GUICrearNota extends JFrame {
 
 		panelEncabezado.setBackground(getForeground());
 		panelEncabezado.setLayout(new BorderLayout());
-		
-		titulo.setFont(new FontUIResource("TimesRoman", Font.PLAIN, 30));
+
+		titulo.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 30));
 		titulo.setBorder(new LineBorder(Color.BLACK));
 		titulo.setPreferredSize(new DimensionUIResource(300, 30));
 
@@ -65,7 +92,7 @@ public class GUICrearNota extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUIListadoNotas notas = new GUIListadoNotas(ruta);
+				GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 				notas.setVisible(true);
 				notas.setResizable(true);
 				notas.setLocationRelativeTo(null);
@@ -133,11 +160,10 @@ public class GUICrearNota extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (!contenido.getText().isEmpty() && !titulo.getText().isEmpty()) {
-					
-					Control c = new Control(ruta);
+
 					c.agregarNota(titulo.getText(), contenido.getText(), "Notas", 0);
 
-					GUIListadoNotas notas = new GUIListadoNotas(ruta);
+					GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 					notas.setVisible(true);
 					notas.setResizable(false);
 					notas.setLocationRelativeTo(null);
@@ -145,7 +171,11 @@ public class GUICrearNota extends JFrame {
 
 				} else if (contenido.getText().isEmpty() || titulo.getText().isEmpty()) {
 
-					JOptionPane.showMessageDialog(null, "No se han hecho los cambios necesarios en al nota");
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "No se han llenado los cambios requeridos", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
