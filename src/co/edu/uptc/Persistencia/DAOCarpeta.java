@@ -74,16 +74,30 @@ public class DAOCarpeta {
 		File[] files = dir.listFiles();
 
 		for (int i = 0; i < files.length; i++) {
+			
 
 			if (c.getNombre().equalsIgnoreCase(files[i].getName())) {
 
 				File a = files[i];
-
-				a.delete();
+				
+				deleteFile(a);
 
 			}
 
 		}
+	}
+	
+	private void deleteFile(File element) {
+		
+	    if (element.isDirectory()) {
+	    	
+	        for (File sub : element.listFiles()) {
+	        	
+	            deleteFile(sub);
+	        }
+	    }
+	    
+	    element.delete();
 	}
 
 }

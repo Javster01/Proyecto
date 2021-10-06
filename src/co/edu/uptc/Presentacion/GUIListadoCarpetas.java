@@ -205,6 +205,8 @@ public class GUIListadoCarpetas extends JFrame {
 
 				} else {
 
+
+					Control c = new Control(ruta);
 					int indice = listaCarpetas.getSelectedIndex();
 					c.eliminarCarpeta(c.getCarpeta(indice), ruta);
 
@@ -226,7 +228,7 @@ public class GUIListadoCarpetas extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				GUICrearNota frame = new GUICrearNota(ruta, c);
+				GUICrearCarpeta frame = new GUICrearCarpeta(ruta, c);
 				frame.setVisible(true);
 				frame.setResizable(true);
 				frame.setLocationRelativeTo(null);
