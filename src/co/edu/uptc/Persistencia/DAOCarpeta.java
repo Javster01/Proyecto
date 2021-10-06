@@ -87,6 +87,12 @@ public class DAOCarpeta {
 		}
 	}
 	
+	/**
+	 * Metodo para elimina carpetas
+	 * 
+	 * @param File element
+	 * 
+	 **/
 	private void deleteFile(File element) {
 		
 	    if (element.isDirectory()) {
