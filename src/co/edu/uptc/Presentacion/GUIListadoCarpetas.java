@@ -162,7 +162,7 @@ public class GUIListadoCarpetas extends JFrame {
 					
 					String ruta = "Carpetas/" + listaCarpetas.getSelectedValue();
 					
-					Control c = new Control(ruta);
+//					Control c = new Control(ruta);
 
 					GUIListadoNotas guiNotas = new GUIListadoNotas(ruta, c);
 					guiNotas.setVisible(true);
