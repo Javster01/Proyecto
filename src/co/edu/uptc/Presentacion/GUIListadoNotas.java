@@ -235,6 +235,9 @@ public class GUIListadoNotas extends JFrame {
 
 					if (!c.getNota(indice).getContrasena().equals("")) {
 
+						UIManager.put("OptionPane.background", Color.white);
+						UIManager.put("Panel.background", Color.white);
+
 						String contra = JOptionPane.showInputDialog("Escriba la contrasena");
 						String contraComp = c.getNota(indice).getContrasena();
 
@@ -246,10 +249,19 @@ public class GUIListadoNotas extends JFrame {
 							frame.setLocationRelativeTo(null);
 
 							setVisible(false);
+
+						} else if (!contra.equals(contraComp)) {
+
+							UIManager.put("OptionPane.background", Color.white);
+							UIManager.put("Panel.background", Color.white);
+
+							JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Advertencia",
+									JOptionPane.WARNING_MESSAGE);
+
 						}
 
-					} else if(c.getNota(indice).getContrasena().equals("")) {
-						
+					} else if (c.getNota(indice).getContrasena().equals("")) {
+
 						GUIMostrarNota frame = new GUIMostrarNota(indice, ruta, c);
 						frame.setVisible(true);
 						frame.setResizable(true);
@@ -312,7 +324,8 @@ public class GUIListadoNotas extends JFrame {
 					UIManager.put("OptionPane.background", Color.white);
 					UIManager.put("Panel.background", Color.white);
 
-					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota que no tenga contrasena para agregar contrasena",
+					JOptionPane.showMessageDialog(null,
+							"No se ha seleccionado una nota que no tenga contrasena para agregar contrasena",
 							"Advertencia", JOptionPane.WARNING_MESSAGE);
 
 				} else {
