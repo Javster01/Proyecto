@@ -22,7 +22,8 @@ public class GUIContrasena extends JFrame {
 		setSize(350, 200);
 		setTitle("Contrasena");
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		ImageIcon im = new ImageIcon("RecursosGUI/notas1.png");
+		setIconImage(im.getImage());
 		iniciarComponentes(c, n, ruta);
 
 	}
