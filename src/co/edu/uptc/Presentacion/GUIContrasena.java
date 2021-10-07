@@ -6,28 +6,31 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import co.edu.uptc.Control.Control;
+import co.edu.uptc.Modelo.Nota;
+
 @SuppressWarnings("serial")
-public class GUIContrasena extends JFrame implements ActionListener {
+public class GUIContrasena extends JFrame {
 
 	private JPanel panelFondo;
 	private JPasswordField contrasena;
 	private JButton guardarContrasena;
 	// private JTextField texto;
 
-	public GUIContrasena() {
+	public GUIContrasena(Control c, Nota n, String ruta) {
 
 		setSize(350, 200);
 		setTitle("Contrasena");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		iniciarComponentes();
+		iniciarComponentes(c, n, ruta);
 
 	}
 
-	private void iniciarComponentes() {
+	private void iniciarComponentes(Control c, Nota n, String ruta) {
 		colocarPaneles();
 		colocarEtiqueta();
-		colocarBotones();
+		colocarBotones(c, n, ruta);
 		// texto();
 
 	}
@@ -47,26 +50,32 @@ public class GUIContrasena extends JFrame implements ActionListener {
 
 	}
 
-	private void colocarBotones() {
+	private void colocarBotones(Control c, Nota n, String ruta) {
 		guardarContrasena = new JButton();
 		guardarContrasena.setText("Guardar");
 		guardarContrasena.setBounds(123, 106, 94, 35);
-		guardarContrasena.addActionListener(this);
+		guardarContrasena.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (contrasena.getText() != "") {
+					c.editarArchivo(n, n.getTitulo(), n.getContenido(), ruta, n.getPrioridad(), contrasena.getText());
+
+					GUIListadoNotas gui = new GUIListadoNotas(ruta, c);
+					gui.setVisible(true);
+					gui.setResizable(true);
+					gui.setLocationRelativeTo(null);
+					dispose();
+
+				}
+
+			}
+
+		});
+
 		panelFondo.add(guardarContrasena);
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent evento) {
-		if (evento.getSource() == guardarContrasena) {
-			System.out.println("prueba");
-			guardarContrasena();
-		}
-	}
-
-	private void guardarContrasena() {
-		String ContrasenaN;
-		ContrasenaN = contrasena.getText();
-
-	}
 }

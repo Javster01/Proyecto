@@ -29,7 +29,7 @@ public class DAONotas {
 	public void guardarNota(Nota n, String ruta) {
 
 		new Archivo().AgregarContenido(ruta, n.getTitulo() + "," + n.getId() + "," + n.getFecha() + "," + n.getRuta()
-				+ "," + n.getPrioridad() + "," + n.getContenido());
+				+ "," + n.getPrioridad() + "," + n.getContenido() + "," + n.getContrasena());
 
 	}
 
@@ -39,22 +39,24 @@ public class DAONotas {
 	 * @param File folder ruta
 	 * 
 	 **/
-	
+
 	public void findAllFilesInFolder(File folder) {
 		
+		archivos = new ArrayList<>();
+
 		for (File file : folder.listFiles()) {
-			
+
 			if (file.isFile()) {
-				
+
 				archivos.add(file);
-				
+
 			} else {
-				
+
 				findAllFilesInFolder(file);
 			}
 		}
 	}
-	
+
 	/**
 	 * Metodo para manipular las notas existentes y extraer el contenido de las
 	 * notas
@@ -70,7 +72,7 @@ public class DAONotas {
 		archivos = new ArrayList<>();
 
 		File dir = new File(ruta);
-		
+
 		findAllFilesInFolder(dir);
 
 		for (int i = 0; i < archivos.size(); i++) {
@@ -89,6 +91,7 @@ public class DAONotas {
 				n.setRuta(linea[3]);
 				n.setPrioridad(Integer.parseInt(linea[4]));
 				n.setContenido(linea[5].replace(";", "").replace("\\n", "\n").replace("_", ",").replace("-", ";"));
+				n.setContrasena(linea[6].replace(";", ""));
 
 				notas.add(n);
 
@@ -110,24 +113,29 @@ public class DAONotas {
 
 	public void eliminarArchivo(Nota n, String ruta) {
 
+		ArrayList<String> datos = new ArrayList<>();
+
 		File dir = new File(ruta);
 
-		File[] files = dir.listFiles(new FilenameFilter() {
+		findAllFilesInFolder(dir);
 
-			public boolean accept(File dir, String name) {
-				return name.toLowerCase().endsWith(".txt");
-			}
-		});
+		for (int i = 0; i < archivos.size(); i++) {
 
-		for (int i = 0; i < files.length; i++) {
+			datos = new Archivo().ContenidoArchivo((archivos.get(i).getPath()));
+			
+			for (int j = 0; j < datos.size(); j++) {
 
-			if (n.getRuta().equalsIgnoreCase(files[i].getPath().replace("\\", "/"))) {
+				if (n.getRuta().equalsIgnoreCase(archivos.get(j).getPath().replace("\\", "/"))) {
 
-				File a = files[i];
+					File a = archivos.get(i);
 
-				a.delete();
+					a.delete();
 
-			}
+				}
+			
+		}
+
+		
 
 		}
 	}

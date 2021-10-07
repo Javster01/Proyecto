@@ -57,7 +57,7 @@ public class GUIListadoNotas extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(im.getImage());
 		setSize(360, 630);
-		
+
 		String[] tituloVentana = ruta.split("/");
 		setTitle(tituloVentana[1]);
 		getContentPane().setBackground(Color.WHITE);
@@ -233,12 +233,30 @@ public class GUIListadoNotas extends JFrame {
 
 					int indice = listaNotas.getSelectedIndex();
 
-					GUIMostrarNota frame = new GUIMostrarNota(indice, ruta, c);
-					frame.setVisible(true);
-					frame.setResizable(true);
-					frame.setLocationRelativeTo(null);
+					if (!c.getNota(indice).getContrasena().equals("")) {
 
-					setVisible(false);
+						String contra = JOptionPane.showInputDialog("Escriba la contrasena");
+						String contraComp = c.getNota(indice).getContrasena();
+
+						if (contra.equals(contraComp)) {
+
+							GUIMostrarNota frame = new GUIMostrarNota(indice, ruta, c);
+							frame.setVisible(true);
+							frame.setResizable(true);
+							frame.setLocationRelativeTo(null);
+
+							setVisible(false);
+						}
+
+					} else if(c.getNota(indice).getContrasena().equals("")) {
+						
+						GUIMostrarNota frame = new GUIMostrarNota(indice, ruta, c);
+						frame.setVisible(true);
+						frame.setResizable(true);
+						frame.setLocationRelativeTo(null);
+
+						setVisible(false);
+					}
 
 				} else if (listaNotas.getSelectedValue() == null) {
 
@@ -278,7 +296,7 @@ public class GUIListadoNotas extends JFrame {
 
 			}
 		});
-		
+
 		contrasena.setIcon(new ImageIcon("RecursosGUI/bloquear.png"));
 		contrasena.setBackground(Color.WHITE);
 		contrasena.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
@@ -287,19 +305,21 @@ public class GUIListadoNotas extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (listaNotas.getSelectedValue() == null) {
+				int indice = listaNotas.getSelectedIndex();
+
+				if (listaNotas.getSelectedValue() == null && !c.getNota(indice).getContrasena().equals("")) {
 
 					UIManager.put("OptionPane.background", Color.white);
 					UIManager.put("Panel.background", Color.white);
 
-					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para agregar contraseña", "Advertencia",
-							JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota que no tenga contrasena para agregar contrasena",
+							"Advertencia", JOptionPane.WARNING_MESSAGE);
 
 				} else {
 
-					int indice = listaNotas.getSelectedIndex();
-					GUIContrasena gui = new GUIContrasena();
+					GUIContrasena gui = new GUIContrasena(c, c.getNota(indice), ruta);
 					gui.setVisible(true);
+					setVisible(false);
 
 				}
 

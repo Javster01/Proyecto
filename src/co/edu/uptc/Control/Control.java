@@ -183,7 +183,7 @@ public class Control {
 	 * 
 	 **/
 
-	public void agregarNota(String titulo, String contenido, String ruta, int Prioridad) {
+	public void agregarNota(String titulo, String contenido, String ruta, int Prioridad, String contrasena) {
 
 		Nota n = new Nota();
 
@@ -215,6 +215,7 @@ public class Control {
 		n.setPrioridad(Prioridad);
 		n.setRuta(ruta + "/" + n.getTitulo() + "'" + n.getId() + ".txt");
 		n.setFecha(fecha);
+		n.setContrasena(contrasena);
 
 		DAONotas notas = new DAONotas();
 
@@ -366,15 +367,16 @@ public class Control {
 	 * 
 	 **/
 
-	public void editarArchivo(Nota n, String titulo, String contenido, String ruta, int Prioridad) {
+	public void editarArchivo(Nota n, String titulo, String contenido, String ruta, int Prioridad, String contrasena) {
 
 		Nota n1 = new Nota();
 		n1.setTitulo(titulo);
 		n1.setContenido(contenido);
 		n1.setPrioridad(Prioridad);
+		n1.setContrasena(contrasena);
 
 		eliminarNota(n, ruta);
-		agregarNota(n1.getTitulo(), n1.getContenido(), ruta, n1.getPrioridad());
+		agregarNota(n1.getTitulo(), n1.getContenido(), ruta, n1.getPrioridad(), n1.getContrasena());
 
 		if (getOrden() == true) {
 
