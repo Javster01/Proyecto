@@ -9,8 +9,16 @@ package co.edu.uptc.Modelo;
 
 public class Nota {
 
-	private String titulo, contenido, fecha, ruta;
+	private String titulo, contenido, fecha, ruta, contrasena;
 	private int id, Prioridad;
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
 
 	public int getPrioridad() {
 		return Prioridad;

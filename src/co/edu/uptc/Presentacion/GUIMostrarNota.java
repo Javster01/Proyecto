@@ -223,7 +223,7 @@ public class GUIMostrarNota extends JFrame {
 						|| prioridad.getSelectedIndex() != c.getNota(indice).getPrioridad()) {
 
 					c.editarArchivo(c.getNota(indice), titulo.getText(), contenido.getText(), ruta,
-							prioridad.getSelectedIndex());
+							prioridad.getSelectedIndex(), c.getNota(indice).getContrasena());
 
 					GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 					notas.setVisible(true);

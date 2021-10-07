@@ -161,7 +161,7 @@ public class GUICrearNota extends JFrame {
 
 				if (!contenido.getText().isEmpty() && !titulo.getText().isEmpty()) {
 
-					c.agregarNota(titulo.getText(), contenido.getText(), ruta, 0);
+					c.agregarNota(titulo.getText(), contenido.getText(), ruta, 0, "");
 
 					GUIListadoNotas notas = new GUIListadoNotas(ruta, c);
 					notas.setVisible(true);
