@@ -59,7 +59,7 @@ public class GUIContrasena extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent evento) {
 		if (evento.getSource() == guardarContrasena) {
-			System.out.println("putos todos");
+			System.out.println("prueba");
 			guardarContrasena();
 		}
 	}

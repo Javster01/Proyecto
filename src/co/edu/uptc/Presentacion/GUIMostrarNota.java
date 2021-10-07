@@ -21,7 +21,7 @@ public class GUIMostrarNota extends JFrame {
 	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro;
 	private JTextField titulo;
 	private JTextArea contenido;
-	private JButton volver, guardarCambios, agregarContrasena, agregarPrioridad;
+	private JButton volver, guardarCambios, agregarPrioridad;
 	private JComboBox<String> prioridad;
 	private boolean estado;
 	private String[] prioridades;
@@ -49,7 +49,6 @@ public class GUIMostrarNota extends JFrame {
 		contenido = new JTextArea();
 		volver = new JButton();
 		guardarCambios = new JButton();
-		agregarContrasena = new JButton();
 		agregarPrioridad = new JButton(new ImageIcon("RecursosGUI/orden2.png"));
 		prioridades = new String[4];
 		prioridades[0] = "Ninguna";
@@ -102,20 +101,6 @@ public class GUIMostrarNota extends JFrame {
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		titulo.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 30));
 		titulo.setBorder(new LineBorder(new Color(0, 0, 0, 0), 0));
-
-		agregarContrasena.setIcon(new ImageIcon("RecursosGUI/bloquear.png"));
-		agregarContrasena.setBackground(Color.WHITE);
-		agregarContrasena.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
-		agregarContrasena.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				GUIContrasena gc = new GUIContrasena();
-                gc.setVisible(true);
-                //dispose();
-
-			}
-		});
 
 		prioridad.setBackground(Color.WHITE);
 		prioridad.setFont(new FontUIResource("Calibri", Font.PLAIN, 15));
@@ -182,7 +167,6 @@ public class GUIMostrarNota extends JFrame {
 		pContrasena.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		pContrasena.add(pComboBox);
 		pContrasena.add(agregarPrioridad);
-		pContrasena.add(agregarContrasena);
 
 		JPanel pTituto = new JPanel();
 		pTituto.setBackground(getForeground());

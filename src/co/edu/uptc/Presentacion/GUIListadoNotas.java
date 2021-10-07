@@ -22,7 +22,7 @@ public class GUIListadoNotas extends JFrame {
 	private JPanel panelFondo, panelEncabezado, panelAbajo, panelCentro, notasPanel;
 	private JLabel labelTituloEncabezado;
 	private JList<String> listaNotas;
-	private JButton crearNuevaNota, editarNota, borrarNota, volverCarpetas, ordenP, ordenA;
+	private JButton crearNuevaNota, editarNota, borrarNota, volverCarpetas, ordenP, ordenA, contrasena;
 	private String[] nombresArchivos;
 
 	/**
@@ -49,6 +49,7 @@ public class GUIListadoNotas extends JFrame {
 		ordenP = new JButton();
 		ordenA = new JButton();
 		notasPanel = new JPanel();
+		contrasena = new JButton();
 
 		// Configuracion del Frame
 
@@ -277,8 +278,36 @@ public class GUIListadoNotas extends JFrame {
 
 			}
 		});
+		
+		contrasena.setIcon(new ImageIcon("RecursosGUI/bloquear.png"));
+		contrasena.setBackground(Color.WHITE);
+		contrasena.setBorder(new LineBorder(new Color(0, 0, 0, 0)));
+		contrasena.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (listaNotas.getSelectedValue() == null) {
+
+					UIManager.put("OptionPane.background", Color.white);
+					UIManager.put("Panel.background", Color.white);
+
+					JOptionPane.showMessageDialog(null, "No se ha seleccionado una nota para agregar contraseña", "Advertencia",
+							JOptionPane.WARNING_MESSAGE);
+
+				} else {
+
+					int indice = listaNotas.getSelectedIndex();
+					GUIContrasena gui = new GUIContrasena();
+					gui.setVisible(true);
+
+				}
+
+			}
+		});
 
 		iconos.add(editarNota);
+		iconos.add(contrasena);
 		iconos.add(borrarNota);
 
 		crearNuevaNota.setText("Crear una nueva nota");
