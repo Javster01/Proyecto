@@ -313,7 +313,7 @@ public class Control {
 
 		for (int i = 0; i < lista.size(); i++) {
 
-			if (lista.get(i).getId() == n.getId()) {
+			if (lista.get(i).getRuta().equals(n.getRuta())) {
 
 				new DAONotas().eliminarArchivo(n, ruta);
 				lista.remove(n);

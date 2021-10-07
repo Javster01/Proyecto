@@ -41,7 +41,7 @@ public class DAONotas {
 	 **/
 
 	public void findAllFilesInFolder(File folder) {
-		
+
 		archivos = new ArrayList<>();
 
 		for (File file : folder.listFiles()) {
@@ -113,31 +113,22 @@ public class DAONotas {
 
 	public void eliminarArchivo(Nota n, String ruta) {
 
-		ArrayList<String> datos = new ArrayList<>();
-
 		File dir = new File(ruta);
 
 		findAllFilesInFolder(dir);
 
 		for (int i = 0; i < archivos.size(); i++) {
 
-			datos = new Archivo().ContenidoArchivo((archivos.get(i).getPath()));
-			
-			for (int j = 0; j < datos.size(); j++) {
+			if (n.getRuta().equalsIgnoreCase(archivos.get(i).getPath().replace("\\", "/"))) {
 
-				if (n.getRuta().equalsIgnoreCase(archivos.get(j).getPath().replace("\\", "/"))) {
+				File a = archivos.get(i);
 
-					File a = archivos.get(i);
+				a.delete();
 
-					a.delete();
-
-				}
-			
-		}
-
-		
+			}
 
 		}
+
 	}
 
 }
